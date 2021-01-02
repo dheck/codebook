@@ -1,0 +1,15 @@
+_minted-*/
+*.log
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.out
+*.run.xml
+*.solution
+*.toc
