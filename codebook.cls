@@ -105,7 +105,7 @@
 
 \RequirePackage{type1cm}
 \RequirePackage[largesc]{newpxtext}
-\RequirePackage[scale=0.90,condensed]{noto-mono}
+\RequirePackage[scale=0.88,semicondensed]{noto-mono}
 \RequirePackage[scaled=1.02,proportional,semibold]{sourcesanspro}
 \RequirePackage[]{newpxmath}
 
