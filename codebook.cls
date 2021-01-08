@@ -52,7 +52,7 @@
 \setlength{\@fpsep}{18pt plus 1fil minus 4pt}
 
 % % Space between top/bottom float and text
-% \setlength{\textfloatsep}{12pt plus 6pt minus 4pt}
+\setlength{\textfloatsep}{24pt plus 6pt minus 4pt}
 
 % % % Space before/after 'here' floats.
 \setlength{\intextsep}{12pt plus 4pt minus 3pt}
