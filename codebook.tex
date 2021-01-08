@@ -289,10 +289,12 @@ Packages that are based in \emph{fancyvrb} automatically work correctly;
 Other \LaTeX{} packages for displaying code such as \emph{lstlisting} provide their own formatting options and must be configured by hand.
 \end{note}
 
+\marginnote{The \texttt{lst} and \texttt{lst*} environments.}
 The second environment for embedding code listings is called \verb|lst|.
 Unlike the normal \verb|listing| environment, \verb|lst|s don't float and are embedded in the surrounding text, similar to the way \verb|equation| or \verb|itemize| can occur in the middle of a normal paragraph.
-The following example is typeset using \verb|lst| 
-\begin{lst*}{The \texttt{lst} environment.}
+In addition, code enclosed in a \verb|lst| environment can be broken across pages.
+Code listings in \verb|lst| environments are numbered and have a caption, which must be specified as a mandatory argument.
+In addition, a label can be specified as an optional argument, as in the following example:
 \begin{texcode}
 \begin{lst}[lst:hellopython]{Hello World in Python.}
 \begin{Verbatim}
@@ -300,16 +302,16 @@ print("Hello World")
 \end{Verbatim}
 \end{lst}
 \end{texcode}
-\end{lst*}
-The caption of \verb|lst| is typeset in the margin:
+Here, the label is \verb|lst:hellopython| and the caption \verb|Hello World in Python.|.
+The listing is typeset as follows:
 \begin{lst}[lst:hellopython]{Hello World in Python.}
 \begin{Verbatim}
 print("Hello World")
 \end{Verbatim}
 \end{lst}
+The number of the listing and its caption are shown in the margin.
 
 Alternatively, you can use the \verb|lst*| environment to produce an unnumbered listing:
-\begin{lst*}{The \texttt{lst} environment.}
 \begin{texcode}
 \begin{lst*}{Hello World in Python.}
 \begin{Verbatim}
@@ -317,12 +319,9 @@ print("Hello World")
 \end{Verbatim}
 \end{lst*}
 \end{texcode}
-\end{lst*}
 Since \verb|lst*| is unnumbered it doesn't take the label as an optional argument, and it doesn't output a number in front of the caption.
 
 
-for interleaving code examples with the main text.
-Code enclosed in a \verb|lst| environment can be broken across pages.
 
 
 \begin{note}
@@ -383,9 +382,10 @@ You can refer to exercises and tasks by labeling them as shown in the previous e
 The label of an exercise contains both the number of the chapter and the exercise, so writing \verb|Exercise~\ref{ex:binomial}| produces ``Exercise~\ref{ex:binomial}.'' 
 The label of a task contains just its alphabetic tag, so \verb|Task~\ref{task:euler}| produces ``Task~\ref{task:euler}.''
 
+\marginnote{Loading answers}
 The answers are not typeset immediately but saved to a separate file.
 You can load all answers defined in the current document using the \verb|\inputanswers| command:
-\begin{lst*}{Loading answers}
+\begin{lst*}{}
 \begin{minted}{tex}
 \inputanswers
 \end{minted}
