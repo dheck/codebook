@@ -566,26 +566,13 @@
 \setlength{\fancyvrbtopsep}{\baselineskip}
 
 
-% Modify Verbatim environment to use the updated font size.
-% (\fvset{fontsize=} would also change the size of
-% inline verbatim material.)
+% Modify Verbatim environment to use a smaller font size.
+% (We cannot use \fvset{fontsize=} here because this would
+% also change the font size of inline \verb|| material.
 \RequirePackage{relsize}
 \renewcommand\RSpercentTolerance{0}
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}
-  {fontsize=\relscale{0.96}, baselinestretch=1.08} %\fontsize{9}{11}}
-
-% \FV@AddToHook\FV@ListParameterHook{\vspace{-6pt}}
-
-\DefineVerbatimEnvironment{FVerbatim}{Verbatim}{
-  xleftmargin=0pt
-}
-
-% Default settings for verbatim environments that occur
-% as part of the text.
-\fvset{
-    baselinestretch=1,
-    % xleftmargin=\cb@parindent
-  }
+  {fontsize=\relscale{0.96}, baselinestretch=1.06}
 
 % Settings for verbatim environments inside lst environments
 \newcommand{\cb@setuplisting}{}%
@@ -593,7 +580,6 @@
 % Font used for Verbatim blocks and long code listings.
 \renewcommand{\cb@setuplisting}{%
   \fvset{
-    % xleftmargin=0pt,
     rulecolor=black,
     }%
   % \setlength{\fancyvrbtopsep}{2pt}%
