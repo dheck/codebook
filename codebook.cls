@@ -165,6 +165,8 @@
   footskip=24pt,
   papersize={7in,9.25in},
   twoside,
+  asymmetric,
+  reversemarginpar,
   includemp,    % respect margin when placing text block on paper
   outer=0.56in,
   % bindingoffset=0.156in,
@@ -268,7 +270,7 @@
 
 
 % Headers and footers extend into the margin
-\widenhead*{0cm}{\cb@overhang}%
+\widenhead{\cb@overhang}{0cm}%
 
 % Plain pages are empty except for a page number
 % in the bottom-right corner.
@@ -301,26 +303,26 @@
 % \newcommand{\cb@tocrule}{\hspace{2ex}}
 \newcommand{\cb@tocrule}{\hfill}
 \titlecontents{part}[0mm]
-  {\vspace{30pt}\Large\sffamily}
-  {{\thecontentslabel}\hspace{1.5ex}\fontseries{sb}\selectfont}
+  {\vspace{30pt}\Large\sffamily\fontseries{b}\selectfont}
+  {\makebox[15pt][l]{\thecontentslabel}}
   {}
   {\hfill\contentspage}
   [\vspace*{-8pt}\rule{\linewidth}{0.4pt}\vspace*{6pt}]
 
 \titlecontents{chapter}[0mm]
-  {\addvspace{6pt}\sffamily\bfseries}
-  {\large\rule{0pt}{16pt}\makebox[20pt][r]{\mdseries\thecontentslabel\hspace{1.5ex}}}
-  {\hspace*{20pt}\rule{0pt}{10pt}}
+  {\addvspace{6pt}\sffamily\bfseries\large}
+  {\rule{0pt}{16pt}\makebox[15pt][l]{\thecontentslabel\hspace{1.5ex}}}
+  {\hspace*{15pt}\rule{0pt}{10pt}}
   {\cb@tocrule\contentspage}
   []
 
-\titlecontents{section}[20pt]
-  {\addvspace{2pt}\sffamily}
-  {\makebox[20pt][r]{\color{black}\thecontentslabel\hspace{1.5ex}}\bfseries}
-  {\makebox[20pt][l]{}\bfseries}
+\titlecontents{section}[15pt]
+  {\addvspace{2pt}\sffamily\bfseries}
+  {\makebox[20pt][l]{\color{black}\thecontentslabel}}
+  {\makebox[20pt][l]{}}
   {\cb@tocrule\contentspage}
 
-\titlecontents{subsection}[40pt]
+\titlecontents{subsection}[35pt]
   {\sffamily}
   {\makebox[26pt][l]{\fontseries{l}\selectfont\thecontentslabel}}
   {\makebox[26pt][l]{}}
@@ -331,23 +333,30 @@
 % [#part]
 %---------------------
 
-% Part pages are empty but can contain additional text.
 \assignpagestyle{\part}{empty}
+
+% Part pages are empty but can contain additional text.
 \titleclass{\part}{top}
 
-\titleformat{\part}[display]
-  {\centering\sffamily%\titlerule[0.4pt]
-  }
-  {\huge\fontseries{l}\selectfont\textcolor{cbBlue}{\partname\ \thepart}%
-  % \titlerule
-  }
-  {12pt}
-  {%
-  % \vspace*{12pt}%
-  \Huge\fontseries{sb}\selectfont{#1}}
+\titleformat{\part}
+  {\RaggedRight\sffamily}
+  {\makebox[0pt][r]{%
+    \begin{tikzpicture}[baseline=(P.base)]
+      \node (P) [
+          fill=white,text=cbBlue, 
+          font=\fontsize{72}{40}\fontseries{sb}\selectfont,
+          align=left,
+          inner sep=0pt,
+          minimum height=4pc]
+        {\thepart};
+        % \draw[line width=6pt,cbLightBlue] ([yshift=-12pt]P.south east) -- ([yshift=-12pt]P.south west);
+    \end{tikzpicture}%
+    \hspace*{\marginparsep}}}
+  {0pt}
+  {\Huge\fontseries{sb}\selectfont{#1}}
 
 \titlespacing*{\part}
-  {0pt}{6\baselineskip}{6\baselineskip}
+  {0pt}{8pc}{5pc}
 
 
 %---------------------
@@ -355,10 +364,20 @@
 %---------------------
 \assignpagestyle{\chapter}{plain}
 
-\titleformat{\chapter}[display]
-  {\raggedright\sffamily}
-  {\huge\fontseries{l}\selectfont\textcolor{cbBlue}{{\@chapapp}~\thechapter}}
-  {1pc}
+\titleformat{\chapter}
+  {\RaggedRight\sffamily}
+  {\makebox[0pt][r]{%
+    \begin{tikzpicture}[baseline=(P.base)]
+      \node (P) [
+          fill=white,text=cbBlue, 
+          font=\fontsize{66}{40}\fontseries{sb}\selectfont,
+          align=left,
+          inner sep=0pt,
+          minimum height=4pc]
+        {\thechapter};
+    \end{tikzpicture}%
+    \hspace*{\marginparsep}}}
+  {0pc}
   {\huge\bfseries{#1}}
 
 \titleformat{name=\chapter,numberless}[display]
@@ -368,15 +387,17 @@
   {\huge\fontseries{sb}\selectfont{#1}}
 
 \titlespacing*{\chapter}
-  {0pt}{1.5pc}{5pc}
+  {0pt}{1pc}{5pc}
 
 %---------------------
 % [#section]
 %---------------------
 \titleformat{\section}
   {\sffamily\bfseries\Large\raggedright}
-  {\mdseries\thesection}
-  {1.5ex}
+  {\makebox[0pt][r]{\tikz[baseline=(P.base)]
+    \node (P) [fill=white,text=cbBlue,inner sep=0pt]
+      {\bfseries\thesection};\hspace*{\marginparsep}}}
+  {0pt}
   {#1}
 
 \titlespacing*{\section}
@@ -387,8 +408,10 @@
 %---------------------
 \titleformat{\subsection}
   {\sffamily\large}
-  {\fontseries{l}\selectfont\thesubsection}
-  {1.5ex}
+  {\makebox[0pt][r]{\tikz[baseline=(P.base)]
+    \node (P) [fill=white,text=cbBlue,inner sep=0pt]
+      {\fontseries{m}\selectfont\thesubsection};\hspace*{\marginparsep}}}
+  {0pt}
   {#1}
 
 \titlespacing*{\subsection}
@@ -406,7 +429,7 @@
 % [#paragraph]
 %---------------------
 
-\titleformat{\paragraph} %[runin]
+\titleformat{\paragraph}
   {\bfseries}
   {\theparagraph}
   {1pc}
@@ -423,22 +446,22 @@
 
 \captionsetup{
   font={small},
-  labelfont={bf},
+  labelfont={bf,sf},
   skip=10pt,
   labelsep=period,
-  singlelinecheck=true}
+  singlelinecheck=false}
 
 \captionsetup[sub]{
   font={small},
   labelfont={}}
 
 \captionsetup[table]{
-  position=above,
-  labelsep=newline,
-  justification=Centering,
+  % position=above,
+  % labelsep=newline,
+  % justification=Centering,
   singlelinecheck=false,
-  labelfont={normalsize,bf,sc},
-  skip=2pt,
+  labelfont={bf,sf},
+  skip=4pt,
 }
 
 
@@ -464,9 +487,9 @@
 
 % Creates a minipage that extends into the margin.
 \newenvironment{cb@wide}
-  {\begin{adjustwidth*}{0cm}{-\cb@overhang}%
+  {\begin{adjustwidth}{-\cb@overhang}{0cm}%
     \begin{minipage}{\fulltextwidth}}
-  {\end{minipage}\end{adjustwidth*}}
+  {\end{minipage}\end{adjustwidth}}
 
 \newenvironment{sidefigure}[1][tbp]
   {\begin{SCfigure}[1][#1]}
@@ -498,15 +521,18 @@
 
 \newlength{\epigraphwidth}
 \setlength{\epigraphwidth}{3in}
+\newlength{\epigraphindent}
+\setlength{\epigraphindent}{2\cb@parindent}
 \newlength{\beforeepigraphskip}
 \setlength{\beforeepigraphskip}{0mm}
 \newlength{\afterepigraphskip}
-\setlength{\afterepigraphskip}{2\baselineskip}
+\setlength{\afterepigraphskip}{1.5\baselineskip}
 
 \newenvironment{epigraphs}[1][\epigraphwidth]
   {\vspace*{\beforeepigraphskip}%
-    \begin{adjustwidth}{\dimexpr\linewidth-#1\relax}
-        {0mm}
+    \begin{adjustwidth}
+        {\epigraphindent}
+        {\dimexpr\linewidth-\epigraphindent-#1\relax}
     \setlength{\parskip}{0pt}%
     \small
     \par
@@ -517,6 +543,8 @@
 \newcommand\epigraph[2][]
   {\RaggedRight\noindent#2\\[2pt]
   \noindent\kern1sp---\,{#1}\par\bigskip}
+
+\newcommand{\chapterindent}{\noindent\hspace*{\epigraphindent}}
 
 
 %---------------------------------------
@@ -574,17 +602,6 @@
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}
   {fontsize=\relscale{0.96}, baselinestretch=1.06}
 
-% Settings for verbatim environments inside lst environments
-\newcommand{\cb@setuplisting}{}%
-
-% Font used for Verbatim blocks and long code listings.
-\renewcommand{\cb@setuplisting}{%
-  \fvset{
-    rulecolor=black,
-    }%
-  % \setlength{\fancyvrbtopsep}{2pt}%
-}
-
 % Define listing environment, unless one already exists
 \ifcsmacro{listing}{}{
   \DeclareFloatingEnvironment[
@@ -593,33 +610,30 @@
     name=Listing]{listing}
 }
 
-
-\let\cb@origlisting=\listing
-\renewcommand{\listing}[1][tbp]
-  {\cb@origlisting\cb@setuplisting\fvset{xleftmargin=0pt,frame=lines,framesep=6pt}}
-
 \captionsetup[listing]{
   singlelinecheck=false,
   justification=RaggedRight,
   skip=-6pt
 }
 \RequirePackage{marginnote}
-\renewcommand*{\marginfont}{\footnotesize\itshape\color{cbBlue}}
+\renewcommand*{\marginfont}{\rmfamily\footnotesize\itshape\color{black}}
 \renewcommand*{\raggedleftmarginnote}{\RaggedRight}
 \renewcommand*{\raggedrightmarginnote}{\RaggedLeft}
 
-\RequirePackage{needspace}
+% marginnote doesn't understand asymmetric two-page layouts, so we
+% patch its internal test so that it always moves margin notes
+% to the left.
+\g@addto@macro{\@mn@margintest}{\@tempswatrue}
 
 \newsavebox{\lstcaption}
-\newcommand\emitlabel{}
 \newenvironment{lst}[2][]{%
   \goodbreak
-  \cb@setuplisting
   \refstepcounter{listing}%
-  \ifblank{#1}{}{\label{#1}}%
-  \captionlistentry*[listing]{#2}%
-  \renewcommand{\emitlabel}{}%
-  \fvset{formatcom=\marginnote{\rmfamily\scriptsize\fbox{\thelisting}\\[2pt]#2}}%
+  \renewcommand{\caption}[1]{%
+    \captionlistentry*[listing]{##1}%
+    \def\cb@lstcaption{##1}}
+  \caption{#2\ifblank{#1}{}{\label{#1}}}%
+  \fvset{formatcom=\marginnote{\upshape{\sffamily\bfseries\listingname~\thelisting}\hspace{1.5ex}\cb@lstcaption}}%
   \ignorespaces
 }{%
   \nobreak
@@ -627,10 +641,8 @@
 
 \newenvironment{lst*}[1]{%
   \goodbreak
-  \cb@setuplisting
   \refstepcounter{listing}%
-  \renewcommand{\emitlabel}{}%
-  \fvset{formatcom=\marginnote{\rmfamily\scriptsize#1}}%
+  \fvset{formatcom=\marginnote{\upshape#1}}%
   \ignorespaces
 }{%
   \nobreak
@@ -668,11 +680,11 @@
   {asidebox}
 
 \mdfdefinestyle{asideframe}{
-    linewidth=0.8pt,
-    innertopmargin=28pt, innerbottommargin=12pt,
+    linewidth=1pt,
+    innertopmargin=20pt, innerbottommargin=12pt,
     innerleftmargin=14.2pt, innerrightmargin=14.2pt,
     skipabove=0pt, skipbelow=0pt,
-    frametitlefont=\sffamily\fontseries{b}\selectfont\color{black},
+    frametitlefont=\large\sffamily\fontseries{b}\selectfont\color{cbDarkBrown},
     frametitlealignment=\raggedright,
     frametitlerule=false,
     frametitlerulewidth=0.25pt,
@@ -688,9 +700,10 @@
     \begin{mdframed}[style=asideframe,
       skipabove=\bigskipamount,
       skipbelow=\bigskipamount,
-    singleextra={\node at ([xshift=0pt] O |- P) [fill=none, inner sep=2pt,
-        font=\sffamily\fontseries{b}\selectfont, fill=cbDarkBrown, text=white, anchor=north west]
-        {\hspace*{1.3ex}\strut Box \theasidebox.\hspace{1.5ex}#1\hspace*{1.3ex}};},
+      frametitle=#1,
+    singleextra={\node[overlay] at ([xshift=-\marginparsep] O |- P) [fill=none, inner sep=2pt,
+        font=\sffamily\fontseries{b}\selectfont, draw=cbDarkBrown, fill=cbDarkBrown, text=white, anchor=north east]
+        {\hspace*{1.3ex}\strut Box \theasidebox\hspace*{1.3ex}};},
       ]%
     \setlength{\parindent}{\cb@parindent}%
   }%
@@ -699,6 +712,7 @@
   \end{asidebox}
   }
 
+% Customize the quote environment.
 \renewenvironment{quote}
   {\list{}{\leftmargin=20pt
     \rightmargin=20pt

@@ -39,20 +39,21 @@ version 2005/12/01 or later.
 \end{copyrightpage}
 
 
-\begin{dedicationpage}
-To me style is just the outside of content,\\
-and content the inside of style,\\
-like the outside and the inside of the human body---\\
-both go together, they can't be separated.\par
-\bigskip
-\emph{Jean-Luc Godard}
-\end{dedicationpage}
+% \begin{dedicationpage}
+% To me style is just the outside of content,\\
+% and content the inside of style,\\
+% like the outside and the inside of the human body---\\
+% both go together, they can't be separated.\par
+% \bigskip
+% \emph{Jean-Luc Godard}
+% \end{dedicationpage}
 
 
 \tableofcontents
 
 \chapter{Introduction}
 
+\chapterindent
 \emph{Codebook} is a \LaTeX{} package for writing technical books,
 especially books in computer science, mathematics, and related fields.
 It is based on the standard \texttt{book} class, but it completely changes the design and layout and adds several new commands and environments for typesetting the following:
@@ -87,7 +88,16 @@ Notice that \emph{Codebook} allows you to include text after the title of a part
 \chapter{Writing Books using Codebook}
 %--------------------------------------
 
+\begin{epigraphs}
+\epigraph[\textsc{Jean-Luc Godard}]
+  {To me style is just the outside of content,
+and content the inside of style,
+like the outside and the inside of the human body---both go together, they can't be separated.
+}
+  % \includegraphics[width=4cm]{vitruvian.jpg}
+\end{epigraphs}
 
+\chapterindent
 Like any other \LaTeX{} document class, \emph{Codebook} is loaded using the \verb|\documentclass| command:
 \begin{texcode}
 \documentclass[options]{codebook}
@@ -108,14 +118,10 @@ The following options are supported:
 Since \emph{Codebook} is based on the \verb|book| class, all standard \LaTeX{} commands and environments are supported, although many of them have been tweaked to fit the general design.
 In addition, \emph{Codebook} provides several new commands and environments that are particularly useful in technical documents and textbooks.
 
-
-\marginnote{Fonts and font sizes}
 Different font sizes and can be selected using commands such as \verb|\tiny| and \verb|\large|;
 an overview of all predefined font sizes is shown in Figure~\ref{fig:fontsizes}.
 \begin{widetable}[htb]
   \small
-  \caption{Predefined font sizes.}
-  \label{fig:fontsizes}
   \begin{tabularx}{\textwidth}{lrX}
   \toprule
   \verb|\tiny| & 6\,pt & \tiny The quick brown fox\\
@@ -131,10 +137,11 @@ an overview of all predefined font sizes is shown in Figure~\ref{fig:fontsizes}.
   \verb|\HUGE|  & 30\,pt & \HUGE The quick brown fox\\
   \bottomrule
   \end{tabularx}
+  \caption{Predefined font sizes.}
+  \label{fig:fontsizes}
 \end{widetable}
 
 
-\marginnote{Predefined colors}
 \emph{Codebook} defines a color palette you may want to use for highlighting text and for things like illustrations and code listings.
 The full list of predefined colors is shown in Figure~\ref{fig:colors}.
 In addition to the six basic colors \textcolor{cbBlue}{\texttt{cbBlue}}, \textcolor{cbGreen}{\texttt{cbGreen}}, \textcolor{cbRed}{\texttt{cbRed}}, \textcolor{cbOrange}{\texttt{cbOrange}}, \textcolor{cbYellow}{\texttt{cbYellow}}, \textcolor{cbBrown}{\texttt{cbBrown}}, and \textcolor{cbPurple}{\texttt{cbPurple}}, there are also six light variants like \textcolor{cbLightBlue}{\texttt{cbLightBlue}} and six dark variants like \textcolor{cbDarkRed}{\texttt{cbDarkRed}}.%
@@ -142,7 +149,7 @@ In addition to the six basic colors \textcolor{cbBlue}{\texttt{cbBlue}}, \textco
 
 
 \begin{figure}[htb]
-  \centering
+  % \centering
   \begin{tikzpicture}[nodes={minimum width=2.2cm,      
         text height=2.5ex,
         text depth=1.5ex,
@@ -411,7 +418,7 @@ For example, the answers defined in a document called \verb|myboook.tex| can be 
   {Real stupidity beats artificial intelligence every time.}
 \end{epigraphs}
 
-\noindent Many nonfiction books start each chapter with an \emph{epigraph},
+\chapterindent Many nonfiction books start each chapter with an \emph{epigraph},
 an inspirational or humorous quote that fits the theme of the chapter.
 To typeset such epigraphs, \emph{Codebook} provides the \verb|epigraphs| environment that can contain one or more \verb|\epigraph| commands.
 The following example shows how the quote at the beginning of this subsection was specified:
@@ -447,7 +454,7 @@ An example of the standard \texttt{figure} environment is shown in Figure~\ref{f
 Notice that captions are centered, so the contents of the figure should usually be centered as well.
 
 \begin{figure}
-  \centering
+  % \centering
   \includegraphics[width=2.5in]{vitruvian}
   \caption{A normal figure with a centered caption.}
   \label{fig:normal}
@@ -464,7 +471,7 @@ The result is shown in Figure~\ref{fig:wide}: it looks like a normal \texttt{fig
 The length \verb|\fulltextwidth| used in the example above is defined by \emph{Codebook} as the width of the body plus the width of the margin.
 
 \begin{widefigure}
-  \centering
+  % \centering
   \includegraphics[width=\fulltextwidth]{mandel-wide.png}
   \caption{A wide figure.}
   \label{fig:wide}
@@ -484,9 +491,8 @@ Table~\ref{tab:quarks} illustrates the recommended visual appearance of tables i
 \end{itemize}
 
 \begin{table}
-  \centering\small
-  \caption{Quarks}
-  \label{tab:quarks}
+  % \centering
+  \small
   \begin{tabular}{cccccS[separate-uncertainty=true]}
   \toprule
     \textbf{Generation} & \textbf{Name} & \textbf{Symbol} & \textbf{Spin} & \textbf{Charge [e]} & \textbf{Mass [MeV/c$^2$]} \\
@@ -501,6 +507,8 @@ Table~\ref{tab:quarks} illustrates the recommended visual appearance of tables i
        & bottom  & b & $1/2$ & $-1/3$ & 4180 +- 40\\
    \bottomrule
   \end{tabular}
+  \caption{Quarks}
+  \label{tab:quarks}
 \end{table}
 
 The recommended way of formatting tables is to use the \texttt{booktabs} package, which is loaded automatically.
@@ -512,7 +520,8 @@ For example, Table~\ref{tab:quarks} is typeset as follows
   \label{tab:quarks}
   \begin{tabular}{cccccS[separate-uncertainty=true]}
   \toprule
-    \textbf{Generation} & \textbf{Name} & \textbf{Symbol} & \textbf{Spin} & \textbf{Charge [e]} & \textbf{Mass [MeV/c$^2$]} \\
+    \textbf{Generation} & \textbf{Name} & \textbf{Symbol} 
+    & \textbf{Spin} & \textbf{Charge [e]} & \textbf{Mass [MeV/c$^2$]}\\
   \midrule
      \multirow{2}{*}{1} & up      & u & $1/2$ & $+2/3$ & 2.2 +- 0.6\\
        & down    & d & $1/2$ & $-1/3$ & 4.6 +- 0.5\\
