@@ -3,7 +3,6 @@
 \usepackage{tikz}
 \usetikzlibrary{matrix}
 \usepackage{lipsum}
-\usepackage{biblatex}
 \usepackage{graphicx}
 
 \usepackage{tabularx}
@@ -12,9 +11,19 @@
 
 \newminted{tex}{}
 
+\usepackage[backend=biber,
+  style=alphabetic,
+  sorting=ynt
+  ]{biblatex}
+\addbibresource{codebook.bib}
+
+
 \usepackage{makeidx}
 \makeindex%[columns=2,intoc]
 % \indexsetup{othercode=\small}
+
+\newcommand{\envname}[1]{\texttt{#1}\index{#1@\texttt{#1} environment}}
+\newcommand{\macroname}[1]{\texttt{\textbackslash#1}\index{#1@\texttt{\textbackslash#1} macro}}
 
 \begin{document}
 
@@ -107,7 +116,11 @@ The following options are supported:
   \item \texttt{minted}: Loads the \texttt{minted} package and configures it to work well with \emph{Codebook}.
   \item \texttt{drafting}: Adds the current day to the footer and passes the option on to other packages that support it.
   Similar to the \verb|draft| option in the standard \LaTeX{} class this option is meant to be used while preparing the document and should be removed upon publication.
+  \item \verb|draft|: Don't include external graphics and mark overfull boxes.
+  \item \verb|openany|, \verb|openright|: Chapters can start on any or just on right pages.
 \end{itemize}
+Other options are passed on to the standard \verb|book| class but aren't guaranteed to work correctly.
+For instance, \emph{Codebook} uses fixed settings for the page and font size, so standard options such as \verb|a4paper| or \verb|12pt| aren't supported.
 
 
 
@@ -118,23 +131,23 @@ The following options are supported:
 Since \emph{Codebook} is based on the \verb|book| class, all standard \LaTeX{} commands and environments are supported, although many of them have been tweaked to fit the general design.
 In addition, \emph{Codebook} provides several new commands and environments that are particularly useful in technical documents and textbooks.
 
-Different font sizes and can be selected using commands such as \verb|\tiny| and \verb|\large|;
+Different font sizes and can be selected using commands such as \macroname{tiny} and \macroname{large};
 an overview of all predefined font sizes is shown in Figure~\ref{fig:fontsizes}.
 \begin{widetable}[htb]
   \small
   \begin{tabularx}{\textwidth}{lrX}
   \toprule
-  \verb|\tiny| & 6\,pt & \tiny The quick brown fox\\
-  \verb|\scriptsize| & 7\,pt & \scriptsize The quick brown fox\\
-  \verb|\footnotesize| & 8\,pt & \footnotesize The quick brown fox\\
-  \verb|\small| & 9\,pt & \small The quick brown fox\\
-  \verb|\normalsize| & 10\,pt & \normalsize The quick brown fox\\
-  \verb|\large| & 11.5\,pt & \large The quick brown fox\\
-  \verb|\Large| & 13\,pt & \Large The quick brown fox\\
-  \verb|\LARGE| & 15\,pt  & \LARGE The quick brown fox\\
-  \verb|\huge|  & 20\,pt & \huge The quick brown fox\\
-  \verb|\Huge|  & 24\,pt & \Huge The quick brown fox\\
-  \verb|\HUGE|  & 30\,pt & \HUGE The quick brown fox\\
+  \macroname{tiny} & 6\,pt & \tiny The quick brown fox\\
+  \macroname{scriptsize} & 7\,pt & \scriptsize The quick brown fox\\
+  \macroname{footnotesize} & 8\,pt & \footnotesize The quick brown fox\\
+  \macroname{small} & 9\,pt & \small The quick brown fox\\
+  \macroname{normalsize} & 10\,pt & \normalsize The quick brown fox\\
+  \macroname{large} & 11.5\,pt & \large The quick brown fox\\
+  \macroname{Large} & 13\,pt & \Large The quick brown fox\\
+  \macroname{LARGE} & 15\,pt  & \LARGE The quick brown fox\\
+  \macroname{huge}  & 20\,pt & \huge The quick brown fox\\
+  \macroname{Huge}  & 24\,pt & \Huge The quick brown fox\\
+  \macroname{HUGE}  & 30\,pt & \HUGE The quick brown fox\\
   \bottomrule
   \end{tabularx}
   \caption{Predefined font sizes.}
@@ -195,11 +208,11 @@ In addition to the six basic colors \textcolor{cbBlue}{\texttt{cbBlue}}, \textco
 
 
 %--------------------------------------
-\subsection{Notes}
+\subsection{Annotations and Notes}
 %--------------------------------------
 
 \emph{Codebook} provides several ways to add notes and supplementary information to the text.
-As in all \LaTeX{} classes, you can add footnotes\footnote{Like this one.} using the \verb|\footnote| command.
+As in all \LaTeX{} classes, you can add footnotes\footnote{Like this one.} using the \macroname{footnote} command.
 Footnotes are tucked away at the bottom of the page and are therefore (by design!) easy to ignore.
 Use them for information that is truly optional, or for information that you only include for the sake of completeness.
 
@@ -220,7 +233,7 @@ Since notes are visually set off from the main text it's clear that they provide
 They are best used for information that every reader should aware of but that can be safely skimmed.
 
 \marginnote{Margin notes}
-Supplementary information that you want readers should be aware of, even if they don't need to understand all details, us \verb|\marginnote| command:
+Supplementary information that you want readers should be aware of, even if they don't need to understand all details, us \macroname{marginnote} command:
 \begin{texcode}
 \marginnote{Margin notes}
 \end{texcode}
@@ -229,14 +242,17 @@ Margin notes generally serve a different purpose than notes embedded in the text
 They contain information that helps the reader, for example by summarizing the main points of a paragraph or group of paragraphs or by visually dividing a section into smaller pieces.
 
 \marginnote{Boxes}
-Finally, the \verb|aside| environment can be used to present information that is only indirectly related to the contents of the text.
+Finally, the \envname{aside} environment can be used to present information that is only indirectly related to the contents of the text.
 For example, Box~\ref{box:urls} on page~\pageref{box:urls} describes a way to use footnotes for representing hyperlinks in documents that are meant to be printed \emph{and} read electronically.
 
+
+%--------------------------------------
 \begin{aside}{Typesetting Hyperlinks}
 \label{box:urls}
+%--------------------------------------
 A common problem when writing technical documents is dealing with links to websites and other online resources.
 Using \href{https://en.wikipedia.org/wiki/Hyperlink}{hyperlinks} is usually the best solution for electronic documents;
-in \LaTeX{} this can be done using the \verb|\href| command from the \verb|hyperref| package.
+in \LaTeX{} this can be done using the \macroname{href} command from the \verb|hyperref| package.
 
 In documents that are also meant to be printed and read offline, hyperlinks are not useful because the URL is invisible.
 There are two better solutions.
@@ -261,11 +277,11 @@ produces
 verbatim text
 \end{Verbatim}
 If you look closely, you will notice that verbatim blocks use a slighly smaller font size than \Verb|verbatim text| inside a paragraph.
-Code inside \verb|Verbatim| environments is indented to distinguish it from the surrounding text.
+Code inside \envname{Verbatim} environments is indented to distinguish it from the surrounding text.
 
 
 In addition, \emph{codebook} provides two environments for longer listings that can float, similar to figures and tables.
-The first environment is called \verb|listing|:
+The first environment is called \envname{listing}:
 \begin{lst*}{The \texttt{listing} environment}
 \begin{texcode}
 \begin{listing}[htb]
@@ -290,17 +306,11 @@ public class HelloWorld {
 \label{lst:example}
 \end{listing}
 
-\begin{note}
-By default, the \texttt{listing} environment sets up \texttt{fancyvrb} to draw thin lines above and below the code, as illustrated in Listing~\ref{lst:example}.
-Packages that are based in \emph{fancyvrb} automatically work correctly;
-Other \LaTeX{} packages for displaying code such as \emph{lstlisting} provide their own formatting options and must be configured by hand.
-\end{note}
-
 \marginnote{The \texttt{lst} and \texttt{lst*} environments.}
-The second environment for embedding code listings is called \verb|lst|.
-Unlike the normal \verb|listing| environment, \verb|lst|s don't float and are embedded in the surrounding text, similar to the way \verb|equation| or \verb|itemize| can occur in the middle of a normal paragraph.
-In addition, code enclosed in a \verb|lst| environment can be broken across pages.
-Code listings in \verb|lst| environments are numbered and have a caption, which must be specified as a mandatory argument.
+The second environment for embedding code listings is called \envname{lst}.
+Unlike the normal \verb|listing| environment, \envname{lst}s don't float and are embedded in the surrounding text, similar to the way \verb|equation| or \verb|itemize| can occur in the middle of a normal paragraph.
+In addition, code enclosed in a \envname{lst} environment can be broken across pages.
+Code listings in \envname{lst} environments are numbered and have a caption, which must be specified as a mandatory argument.
 In addition, a label can be specified as an optional argument, as in the following example:
 \begin{texcode}
 \begin{lst}[lst:hellopython]{Hello World in Python.}
@@ -318,7 +328,7 @@ print("Hello World")
 \end{lst}
 The number of the listing and its caption are shown in the margin.
 
-Alternatively, you can use the \verb|lst*| environment to produce an unnumbered listing:
+Alternatively, you can use the \envname{lst*} environment to produce an unnumbered listing:
 \begin{texcode}
 \begin{lst*}{Hello World in Python.}
 \begin{Verbatim}
@@ -326,13 +336,11 @@ print("Hello World")
 \end{Verbatim}
 \end{lst*}
 \end{texcode}
-Since \verb|lst*| is unnumbered it doesn't take the label as an optional argument, and it doesn't output a number in front of the caption.
-
-
+Since \envname{lst*} is unnumbered it doesn't take the label as an optional argument, and it doesn't output a number in front of the caption.
 
 
 \begin{note}
-The \texttt{minted} package defines its own \verb|listing| environment that conflicts with the one provided by \emph{Codebook}.
+The \texttt{minted} package defines its own \envname{listing} environment that conflicts with the one provided by \emph{Codebook}.
 To use \texttt{minted}, you can load the \emph{Codebook} class as follows:
 \begin{texcode}
 \PassOptionsToPackage{optionlist}{minted}
@@ -346,8 +354,8 @@ To use \texttt{minted}, you can load the \emph{Codebook} class as follows:
 %--------------------------------------
 
 \emph{Codebook} provides an easy way to typeset exercises and their solutions.
-Exercises are enclosed in the \verb|exercise| environment which takes an optional argument that includes a title.
-Inside each exercise you can use the \verb|answer| environment to specify a solution.
+Exercises are enclosed in the \envname{exercise} environment which takes an optional argument that includes a title.
+Inside each exercise you can use the \envname{answer} environment to specify a solution.
 The following example specifies a single exercise and its solution:
 \begin{lst*}{Specifying exercises and their solutions.}
 \begin{texcode}
@@ -369,7 +377,7 @@ Explain how to typeset the following formulas in \LaTeX{}:
 \end{texcode}
 \end{lst*}
 The \texttt{tasks} environment used in the example above behaves like \verb|itemize|, except that it uses alphabetic labels.
-At the point in the document where the \verb|exercise| environment appears, only the exercise itself is printed:
+At the point in the document where the \envname{exercise} environment appears, only the exercise itself is printed:
 \begin{exercise}[Typesetting formulas]
 \label{ex:binomial}
 Explain how to typeset the following formulas in \LaTeX{}:
@@ -397,12 +405,12 @@ You can load all answers defined in the current document using the \verb|\inputa
 \inputanswers
 \end{minted}
 \end{lst*}
-This command outputs the \verb|answer|s of all exercises that were encountered so far.
-For the single exercise defined above, \verb|\inputanswers| produces the following output:
+This command outputs the \envname{answer}s of all exercises that were encountered so far.
+For the single exercise defined above, \macroname{inputanswers} produces the following output:
 \inputanswers
 
 What if you want to print the answers output by one \LaTeX{} document in another document, for example when producing a separate solutions manual?
-Since the lines in an \verb|answer| environment are simply written to a file called ``\verb|\jobname.solution|,'' where the macro \verb|\jobname| is the name of the current document, you can include the answers from a different \LaTeX{} document using the \verb|\input| or \verb|\include| commands.
+Since the lines in an \envname{answer} environment are simply written to a file called ``\verb|\jobname.solution|,'' where the macro \verb|\jobname| is the name of the current document, you can include the answers from a different \LaTeX{} document using the \verb|\input| or \verb|\include| commands.
 For example, the answers defined in a document called \verb|myboook.tex| can be loaded in another document as follows:
 \begin{texcode}
 \input{mybook.solution}
@@ -420,26 +428,26 @@ For example, the answers defined in a document called \verb|myboook.tex| can be 
 
 \chapterindent Many nonfiction books start each chapter with an \emph{epigraph},
 an inspirational or humorous quote that fits the theme of the chapter.
-To typeset such epigraphs, \emph{Codebook} provides the \verb|epigraphs| environment that can contain one or more \verb|\epigraph| commands.
+To typeset such epigraphs, \emph{Codebook} provides the \envname{epigraphs} environment that can contain one or more \macroname{epigraph} commands.
 The following example shows how the quote at the beginning of this subsection was specified:
 \begin{texcode}
 \begin{epigraphs}
 \epigraph[\textsc{Terry Pratchett}, \emph{Hogfather}]
   {Real stupidity beats artificial intelligence every time.}
 \end{epigraphs}
-\noindent Many nonfiction books start each chapter with an \emph{epigraph},
+\chapterindent Many nonfiction books start each chapter with an \emph{epigraph},
 \end{texcode}
-The \verb|\noindent| command at the beginning of the first paragraph prevents \LaTeX{} from indenting the first line after the quote.
+The \macroname{chapterindent} command at the beginning of the first paragraph instructs \LaTeX{} to indent the first line to line up with the epigraph block.
 
 The following parameters determine the layout of epigraphs:
 \begin{itemize}
-  \item \verb|\epigraphwidth| (default: 3\,in). The width of the box that contains each epigraph.
+  \item \macroname{epigraphwidth} (default: 3\,in). The width of the box that contains each epigraph.
 
-  \item \verb|\beforepigraphskip| (default: 0\,in). The amount of space to insert before the \verb|epigraphs| environment.
+  \item \macroname{beforepigraphskip} (default: 0\,in). The amount of space to insert before the \envname{epigraphs} environment.
 
-  \item \verb|\afterepigraphskip| (default: 2\,pc). The amount of space to insert after the \verb|epigraphs| environment.
+  \item \macroname{afterepigraphskip} (default: 2\,pc). The amount of space to insert after the \envname{epigraphs} environment.
 \end{itemize}
-The values of these parameters can be changed using the \verb|\setlength| command.
+The values of these parameters can be changed using the \macroname{setlength} command.
 
 %--------------------------------------
 \section{Floating Material}
@@ -449,30 +457,49 @@ The values of these parameters can be changed using the \verb|\setlength| comman
 \subsection{Figures}
 %--------------------------------------
 
-In addition to the standard \texttt{figure} environment, \emph{Codebook} provides a \texttt{widefigure} environment that stretches across the entire width of the page.
-An example of the standard \texttt{figure} environment is shown in Figure~\ref{fig:normal}.
-Notice that captions are centered, so the contents of the figure should usually be centered as well.
+\emph{Codebook} provides three environments for specifying figures:
+the standard \envname{figure} environment, \envname{sidefigure} for narrow figures, and \envname{widefigure} for wide figures.
+An example of the standard \envname{figure} environment is shown in Figure~\ref{fig:normal}.
 
 \begin{figure}
   % \centering
-  \includegraphics[width=2.5in]{vitruvian}
-  \caption{A normal figure with a centered caption.}
+  \includegraphics[width=2in]{vitruvian}
+  \caption{A normal figure.}
   \label{fig:normal}
 \end{figure}
 
-For presenting images or other material that is wider than the body of the page, you can use the \texttt{widefigure} environment that extends into the margin of the page:
+For figures that are narrow, an alternative is to put the caption to the side of the image, as shown in Figure~\ref{fig:side}.
+This can be done using the \envname{sidefigure} environment:
+\begin{texcode}
+\begin{sidefigure}
+  \includegraphics[width=1.5in]{vitruvian}
+  \caption{A narrow figure.}
+  \label{fig:side}  
+\end{sidefigure}  
+\end{texcode}
+Like the normal \envname{figure} environment, \envname{sidefigure} takes an optional position argument;
+the default is \verb|[tbp]|.
+
+\begin{sidefigure}
+  \includegraphics[width=1.5in]{vitruvian}
+  \caption{A narrow figure.}
+  \label{fig:side}  
+\end{sidefigure}
+
+
+For presenting images or other material that is wider than the body of the page, you can use the \envname{widefigure} environment that stretches across the entire width of the page.
+An example of \envname{widefigure} is shown in Figure~\ref{fig:wide}: it looks like a normal \envname{figure} with the caption under the image, but its contents extend into the margin area.
+This figure was specified as follows:
 \begin{texcode}
 \begin{widefigure}
-  \includegraphics[width=\fulltextwidth]{mandel-wide.png}
+  \includegraphics[width=\linewidth]{mandel-wide.png}
   \caption{A wide figure.}
 \end{widefigure}
 \end{texcode}
-The result is shown in Figure~\ref{fig:wide}: it looks like a normal \texttt{figure} with the caption under the image, but it extends across the text block plus the margin area.
-The length \verb|\fulltextwidth| used in the example above is defined by \emph{Codebook} as the width of the body plus the width of the margin.
+In this example, \macroname{linewidth} refers to the width of the current box, which in the case of \envname{widefigure} is the width of the text block plus the width of the entire margin area.
 
 \begin{widefigure}
-  % \centering
-  \includegraphics[width=\fulltextwidth]{mandel-wide.png}
+  \includegraphics[width=\linewidth]{mandel-wide.png}
   \caption{A wide figure.}
   \label{fig:wide}
 \end{widefigure}
@@ -538,7 +565,7 @@ For example, Table~\ref{tab:quarks} is typeset as follows
 % \nocite{*}
 
 \backmatter
-% \printbibliography[heading=bibintoc]
+\printbibliography[heading=bibintoc]
 
 \printindex
 

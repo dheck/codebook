@@ -466,7 +466,7 @@
 
 
 % Side captions
-\RequirePackage[centerbody,rightcaption]{sidecap}
+\RequirePackage[rightcaption,raggedright, rightbody,]{sidecap}
 
 \def\sidecaptionrelwidth{20}
 \sidecaptionvpos{figure}{b}
@@ -492,7 +492,7 @@
   {\end{minipage}\end{adjustwidth}}
 
 \newenvironment{sidefigure}[1][tbp]
-  {\begin{SCfigure}[1][#1]}
+  {\begin{SCfigure}[20][#1]}
   {\end{SCfigure}}
 
 \newenvironment{widefigure}[1][tbp]
