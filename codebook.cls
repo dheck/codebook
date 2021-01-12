@@ -523,7 +523,7 @@
 %---------------------------------------
 
 \newlength{\epigraphwidth}
-\setlength{\epigraphwidth}{3in}
+\setlength{\epigraphwidth}{3.5in}
 \newlength{\epigraphindent}
 \setlength{\epigraphindent}{2\cb@parindent}
 \newlength{\beforeepigraphskip}
@@ -537,15 +537,18 @@
         {\epigraphindent}
         {\dimexpr\linewidth-\epigraphindent-#1\relax}
     \setlength{\parskip}{0pt}%
-    \small
+    \small\RaggedRight
     \par
   }
   {\end{adjustwidth}
   \vspace*{\afterepigraphskip}}
 
 \newcommand\epigraph[2][]
-  {\RaggedRight\noindent#2\\[2pt]
-  \noindent\kern1sp---\,{#1}\par\bigskip}
+  {#2
+  \begin{itemize}[left=4.2pt..12pt,rightmargin=4em]
+  \item[\mdseries---] {#1}
+  \end{itemize}
+  \par\bigskip}
 
 \newcommand{\chapterindent}{\noindent\hspace*{\epigraphindent}}
 
