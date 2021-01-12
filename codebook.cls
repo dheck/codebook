@@ -162,7 +162,7 @@
   marginparwidth=1in,
   headheight=12pt,
   headsep=24pt,
-  footskip=24pt,
+  footskip=30pt,
   papersize={7in,9.25in},
   twoside,
   asymmetric,
@@ -170,6 +170,7 @@
   includemp,    % respect margin when placing text block on paper
   outer=0.56in,
   % bindingoffset=0.156in,
+  % showframe,
   top=0.9in,
 }
 
@@ -272,21 +273,21 @@
 % Headers and footers extend into the margin
 \widenhead{\cb@overhang}{0cm}%
 
+\newcommand{\cb@draftingnote}
+  {\iftoggle{cb@drafting}{\textcolor{gray}{\small\@title---DRAFT---\today}}{}}
+
 % Plain pages are empty except for a page number
 % in the bottom-right corner.
 \renewpagestyle{plain}{%
-  \sethead{}{}{}
-  \setfoot
-    {\iftoggle{cb@drafting}{\sffamily\small\today}{}}
-    {}{\cb@page}}
+  \sethead{}{}{}%
+  \setfoot{}{\cb@draftingnote}{\cb@page}%
+  }
 
 
 % Regular pages
 \renewpagestyle{headings}[]{%
   % [even pages][][]{odd pages}{}{}
-  \setfoot
-    [][][\iftoggle{cb@drafting}{\sffamily\small\today}{}]
-    {\iftoggle{cb@drafting}{\sffamily\small\today}{}}{}{}
+  \setfoot{}{\cb@draftingnote}{}
   \sethead
     [\cb@page\hspace{6mm}\cb@evenhead][][]
     {}{}{\cb@oddhead\hspace*{6mm}\cb@page}
@@ -419,11 +420,13 @@
 
 
 \titleformat{\subsubsection}
-  {\sffamily\itshape}
-  {\thesubsection}
+  {\itshape}
+  {\thesubsubsection}
   {1.5ex}
   {#1}
 
+\titlespacing*{\subsubsection}
+  {0pt}{12pt}{8pt}
 
 %---------------------
 % [#paragraph]
