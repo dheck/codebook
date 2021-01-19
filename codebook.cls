@@ -114,7 +114,7 @@
 \linespread{1.1}
 
 \renewcommand\tiny{\@setfontsize\tiny{6}{7}}
-\renewcommand\large{\@setfontsize\large{11.5}{14}}
+\renewcommand\large{\@setfontsize\large{11}{14}}
 \renewcommand\Large{\@setfontsize\Large{13}{17}}
 \renewcommand\LARGE{\@setfontsize\LARGE{15}{20}}
 \renewcommand\huge{\@setfontsize\huge{20}{24}}
@@ -158,7 +158,7 @@
 \geometry{
   textwidth=4.65in,
   textheight=7.5in,
-  marginparsep=0.15in,
+  marginparsep=0.17in,
   marginparwidth=1in,
   headheight=12pt,
   headsep=24pt,
@@ -168,7 +168,7 @@
   asymmetric,
   reversemarginpar,
   includemp,    % respect margin when placing text block on paper
-  outer=0.56in,
+  outer=0.54in,
   % bindingoffset=0.156in,
   % showframe,
   top=0.9in,
@@ -211,7 +211,7 @@
 \newcommand\subtitle[1]{\gdef\@subtitle{#1}}
 
 \newcommand{\cb@titlefont}
-  {\sffamily\fontseries{sb}\HUGE}
+  {\sffamily\fontseries{b}\selectfont\HUGE}
 \newcommand{\cb@subtitlefont}
   {\sffamily\itshape\LARGE}
 \newcommand{\cb@authorfont}
@@ -388,7 +388,7 @@
   {\huge\fontseries{sb}\selectfont{#1}}
 
 \titlespacing*{\chapter}
-  {0pt}{1pc}{5pc}
+  {0pt}{1pc}{4pc}
 
 %---------------------
 % [#section]
@@ -402,13 +402,13 @@
   {#1}
 
 \titlespacing*{\section}
-  {0pt}{24pt}{9pt}
+  {0pt}{24pt}{8pt}
 
 %---------------------
 % [#subsection]
 %---------------------
 \titleformat{\subsection}
-  {\sffamily\large}
+  {\large\sffamily\bfseries}
   {\makebox[0pt][r]{\tikz[baseline=(P.base)]
     \node (P) [fill=white,text=cbBlue,inner sep=0pt]
       {\fontseries{m}\selectfont\thesubsection};\hspace*{\marginparsep}}}
@@ -420,13 +420,13 @@
 
 
 \titleformat{\subsubsection}
-  {\itshape}
+  {\sffamily\bfseries}
   {\thesubsubsection}
   {1.5ex}
   {#1}
 
 \titlespacing*{\subsubsection}
-  {0pt}{12pt}{8pt}
+  {0pt}{12pt}{5pt}
 
 %---------------------
 % [#paragraph]
@@ -439,7 +439,7 @@
   {#1}
 
 \titlespacing*{\paragraph}
-  {0pt}{15pt}{3pt}
+  {0pt}{14pt}{2pt}
 
 
 %---------------------------------------
@@ -545,7 +545,7 @@
 
 \newcommand\epigraph[2][]
   {#2
-  \begin{itemize}[left=4.2pt..12pt,rightmargin=4em]
+  \begin{itemize}[left=16pt..24pt,rightmargin=4em]
   \item[\mdseries---] {#1}
   \end{itemize}
   \par\bigskip}
@@ -639,7 +639,7 @@
     \captionlistentry*[listing]{##1}%
     \def\cb@lstcaption{##1}}
   \caption{#2\ifblank{#1}{}{\label{#1}}}%
-  \fvset{formatcom=\marginnote{\upshape{\sffamily\bfseries\listingname~\thelisting}\hspace{1.5ex}\cb@lstcaption}}%
+  \fvset{formatcom=\marginnote{\upshape{\sffamily\bfseries\thelisting}\hspace{1.5ex}\cb@lstcaption}}%
   \ignorespaces
 }{%
   \nobreak
