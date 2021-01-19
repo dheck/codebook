@@ -24,7 +24,7 @@
 \RequirePackage[pagestyles,outermarks,newparttoc,clearempty,explicit]{titlesec}
 
 \RequirePackage{tikz}
-\usetikzlibrary{calc}
+\usetikzlibrary{calc,backgrounds}
 
 % Must be loaded after xcolor
 \RequirePackage[framemethod=tikz]{mdframed}
@@ -341,20 +341,10 @@
 
 \titleformat{\part}
   {\RaggedRight\sffamily}
-  {\makebox[0pt][r]{%
-    \begin{tikzpicture}[baseline=(P.base)]
-      \node (P) [
-          fill=white,text=cbBlue, 
-          font=\fontsize{72}{40}\fontseries{sb}\selectfont,
-          align=left,
-          inner sep=0pt,
-          minimum height=4pc]
-        {\thepart};
-        % \draw[line width=6pt,cbLightBlue] ([yshift=-12pt]P.south east) -- ([yshift=-12pt]P.south west);
-    \end{tikzpicture}%
+  {\makebox[0pt][r]{\cb@chapternum{\thepart}
     \hspace*{\marginparsep}}}
   {0pt}
-  {\Huge\fontseries{sb}\selectfont{#1}}
+  {\Huge\fontseries{b}\selectfont{#1}}
 
 \titlespacing*{\part}
   {0pt}{8pc}{5pc}
@@ -365,27 +355,53 @@
 %---------------------
 \assignpagestyle{\chapter}{plain}
 
+% Draw gradient behind chapter heading.
+\newcommand{\cb@chapterbg}
+  {\shade[left color=cbLightBlue!15, right color=cbLightBlue!50] 
+        (0,-12pt) rectangle ++(\fulltextwidth, 40pt);
+  }
+
+\newcommand{\cb@chapternum}[1]
+  {\begin{tikzpicture}[baseline=(P.base)]
+      \node (P) [
+          text=cbBlue, 
+          font=\fontsize{72}{40}\fontseries{sb}\selectfont,
+            anchor=base east,
+          % align=left,
+          inner sep=0pt,
+          minimum height=4pc]
+        {\strut};
+      \begin{scope}[overlay,on background layer,xshift=-\marginparwidth]
+        \cb@chapterbg{}
+      \end{scope}
+      \begin{scope}[overlay]
+        \node [
+            text=cbBlue, 
+            anchor=base east,
+            font=\fontsize{72}{40}\fontseries{sb}\selectfont,
+            % align=left,
+            inner sep=0pt,
+            % minimum height=4pc
+            ]
+          {#1\strut};
+      \end{scope}
+    \end{tikzpicture}}
+
 \titleformat{\chapter}
   {\RaggedRight\sffamily}
   {\makebox[0pt][r]{%
-    \begin{tikzpicture}[baseline=(P.base)]
-      \node (P) [
-          fill=white,text=cbBlue, 
-          font=\fontsize{66}{40}\fontseries{sb}\selectfont,
-          align=left,
-          inner sep=0pt,
-          minimum height=4pc]
-        {\thechapter};
-    \end{tikzpicture}%
+    \cb@chapternum{\thechapter}%
     \hspace*{\marginparsep}}}
   {0pc}
   {\huge\bfseries{#1}}
 
-\titleformat{name=\chapter,numberless}[display]
-  {\raggedright\sffamily}
-  {}
-  {1pc}
-  {\huge\fontseries{sb}\selectfont{#1}}
+\titleformat{name=\chapter,numberless}
+  {\RaggedRight\sffamily}
+  {\makebox[0pt][r]{%
+    \cb@chapternum{}%
+    \hspace*{\marginparsep}}}
+  {0pc}
+  {\huge\bfseries{#1}}
 
 \titlespacing*{\chapter}
   {0pt}{1pc}{4pc}
