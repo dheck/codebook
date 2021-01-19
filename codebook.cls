@@ -418,7 +418,7 @@
   {#1}
 
 \titlespacing*{\section}
-  {0pt}{24pt}{8pt}
+  {0pt}{22pt}{8pt}
 
 %---------------------
 % [#subsection]
@@ -432,7 +432,7 @@
   {#1}
 
 \titlespacing*{\subsection}
-  {0pt}{16pt}{8pt}
+  {0pt}{14pt}{6pt}
 
 
 \titleformat{\subsubsection}
