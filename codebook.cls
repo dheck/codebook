@@ -87,7 +87,7 @@
   labelwidth=!,
 }
 
-\setlist[itemize,1]{label={\small\textbullet}}
+\setlist[itemize,1]{label={\raisebox{2pt}{\footnotesize\textbullet}}}
 \setlist[itemize,2]{label=\textendash}
 
 \newlist{tasks}{enumerate}{1}
