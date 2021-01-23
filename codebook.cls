@@ -129,9 +129,9 @@
 \definecolor{cbLightBlue}{HTML}{729fcf}
 \definecolor{cbBlue}{HTML}{3465a4}
 \definecolor{cbDarkBlue}{HTML}{204a87}
-\definecolor{cbLightGreen}{HTML}{8ae234}
-\definecolor{cbGreen}{HTML}{73d216}
-\definecolor{cbDarkGreen}{HTML}{4e9a06}
+\definecolor{cbLightGreen}{HTML}{73d216}
+\definecolor{cbGreen}{HTML}{4e9a06}
+\definecolor{cbDarkGreen}{HTML}{336204}
 \definecolor{cbLightRed}{HTML}{ef2929}
 \definecolor{cbRed}{HTML}{cc0000}
 \definecolor{cbDarkRed}{HTML}{a40000}
