@@ -340,14 +340,15 @@
 \titleclass{\part}{top}
 
 \titleformat{\part}
-  {\RaggedRight\sffamily}
-  {\makebox[0pt][r]{\cb@chapternum{\thepart}
-    \hspace*{\marginparsep}}}
+  {\raggedright\sffamily\bfseries}
+  {\makebox[0pt][r]{\raisebox{-4pt}[0pt][0pt]{\fontsize{72}{30}\selectfont
+      \color{black}
+      \thepart\hspace{24pt}}}}
   {0pt}
   {\Huge\fontseries{b}\selectfont{#1}}
 
 \titlespacing*{\part}
-  {0pt}{8pc}{5pc}
+  {0pt}{8pc}{4pc}
 
 
 %---------------------
@@ -355,65 +356,29 @@
 %---------------------
 \assignpagestyle{\chapter}{plain}
 
-% Draw gradient behind chapter heading.
-\newcommand{\cb@chapterbg}
-  {\shade[left color=cbLightBlue!15, right color=cbLightBlue!50] 
-        (0,-12pt) rectangle ++(\fulltextwidth, 40pt);
-  }
-
-\newcommand{\cb@chapternum}[1]
-  {\begin{tikzpicture}[baseline=(P.base)]
-      \node (P) [
-          text=cbBlue, 
-          font=\fontsize{72}{40}\fontseries{sb}\selectfont,
-            anchor=base east,
-          % align=left,
-          inner sep=0pt,
-          minimum height=4pc]
-        {\strut};
-      \begin{scope}[overlay,on background layer,xshift=-\marginparwidth]
-        \cb@chapterbg{}
-      \end{scope}
-      \begin{scope}[overlay]
-        \node [
-            text=cbBlue, 
-            anchor=base east,
-            font=\fontsize{72}{40}\fontseries{sb}\selectfont,
-            % align=left,
-            inner sep=0pt,
-            % minimum height=4pc
-            ]
-          {#1\strut};
-      \end{scope}
-    \end{tikzpicture}}
-
 \titleformat{\chapter}
-  {\RaggedRight\sffamily}
-  {\makebox[0pt][r]{%
-    \cb@chapternum{\thechapter}%
-    \hspace*{\marginparsep}}}
-  {0pc}
-  {\huge\bfseries{#1}}
-
-\titleformat{name=\chapter,numberless}
-  {\RaggedRight\sffamily}
-  {\makebox[0pt][r]{%
-    \cb@chapternum{}%
-    \hspace*{\marginparsep}}}
-  {0pc}
-  {\huge\bfseries{#1}}
+  {\raggedright\sffamily\Huge\bfseries}
+  {%\hspace*{-0.6\cb@overhang}\makebox[0.6\cb@overhang][l]
+  \makebox[0pt][r]
+    {\raisebox{-4pt}[0pt][0pt]{\fontsize{72}{30}\selectfont
+      \color{black}
+      \thechapter\hspace{24pt}}}
+  }
+  % {\makebox[0pt][r]{\tikz\node[xshift=-14mm,yshift=6mm,font=\fontsize{54}{30}\selectfont, fill=cbLightBlue, text=white, minimum width=0.9in, minimum height=1in,overlay]{\thechapter};\hspace{15pt}}}
+  {0pt}
+  {#1}
 
 \titlespacing*{\chapter}
-  {0pt}{1pc}{4pc}
+  {0pt}{1pc}{10pc}
 
 %---------------------
 % [#section]
 %---------------------
 \titleformat{\section}
   {\sffamily\bfseries\Large\raggedright}
-  {\makebox[0pt][r]{\tikz[baseline=(P.base)]
-    \node (P) [fill=white,text=cbBlue,inner sep=0pt]
-      {\bfseries\thesection};\hspace*{\marginparsep}}}
+  {%\thesection
+    \makebox[0pt][r]{\mdseries\thesection\hspace*{10pt}}%
+  }
   {0pt}
   {#1}
 
@@ -425,15 +390,16 @@
 %---------------------
 \titleformat{\subsection}
   {\large\sffamily\bfseries}
-  {\makebox[0pt][r]{\tikz[baseline=(P.base)]
-    \node (P) [fill=white,text=cbBlue,inner sep=0pt]
-      {\fontseries{m}\selectfont\thesubsection};\hspace*{\marginparsep}}}
+  {\makebox[0pt][r]{\mdseries\thesubsection\hspace*{10pt}}}
   {0pt}
   {#1}
 
 \titlespacing*{\subsection}
-  {0pt}{14pt}{6pt}
+  {0pt}{18pt}{6pt}
 
+%---------------------
+% [#subsubsection]
+%---------------------
 
 \titleformat{\subsubsection}
   {\sffamily\bfseries}
@@ -480,7 +446,7 @@
   % justification=Centering,
   singlelinecheck=false,
   labelfont={bf,sf},
-  skip=4pt,
+  skip=6pt,
 }
 
 
