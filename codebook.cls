@@ -574,23 +574,25 @@
 %---------------------------------------
 
 \RequirePackage{answers}
-\let\openbox\relax
+\RequirePackage{ntheorem}
+
+% Define new theorem style for formatting exercises.
+\newtheoremstyle{exercise}
+  {\item[\hskip\labelsep \theorem@headerfont ##2\theorem@separator]}%
+  {\item[\hskip\labelsep \theorem@headerfont ##2---##3\theorem@separator]}
+\theoremstyle{exercise}
+\theoremheaderfont{\bfseries}
+\theorembodyfont{\upshape}
+\theoremindent0pt
+\theorempreskip{\bigskipamount}
+\theorempostskip{\bigskipamount}
+\theoremseparator{.} 
+\newtheorem{exercise}{}[chapter]
 
 \Newassociation{answer}{cb@solution}{ans}
-
-\newcommand{\cb@exerciseprefix}{}
-\newcounter{exercise}[chapter]
-\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
-\newenvironment{exercise}[1][]
-  {\refstepcounter{exercise}%
-    \paragraph{\makebox[0mm][r]{\mdseries}Exercise\ \theexercise%
-      \ifblank{#1}{}{\hspace{1.2ex}\mdseries\rmfamily\itshape#1}%
-      {\hspace{1.5ex}\cb@exerciseprefix}}}
-  {}
-
 \renewenvironment{cb@solution}[1]
-  {\paragraph{Exercise #1}}
-  {}
+  {\trivlist\item[]\textbf{#1.}\hspace{\labelsep}}
+  {\endtrivlist}
 
 \renewcommand{\solutionextension}{solution}
 \Opensolutionfile{ans}[\jobname]
