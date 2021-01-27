@@ -100,26 +100,31 @@
 % #fonts
 %---------------------------------------
 
-\RequirePackage[final,letterspace=80]{microtype}
+\RequirePackage[final,letterspace=60,tracking=true]{microtype}
+% \SetTracking{ encoding = *, size = small- }{ 1220 }
+
+
 \RequirePackage[T1]{fontenc}
 
 \RequirePackage{type1cm}
 \RequirePackage[largesc]{newpxtext}
-\RequirePackage[scale=0.88,semicondensed]{noto-mono}
-\RequirePackage[scaled=1.02,proportional,semibold]{sourcesanspro}
+\RequirePackage[scale=0.87,semicondensed]{noto-mono}
+\RequirePackage[scaled=1.0,proportional]{sourcesanspro}
+% \RequirePackage[sf,sflining,scaled=0.92]{merriweather}
 \RequirePackage[]{newpxmath}
 
 % \RequirePackage{setspace}
 % \setstretch{1.083}
-\linespread{1.1}
+\linespread{1.083}   % leading 13pt
+% \linespread{1.125}  % leading 13.5pt
 
 \renewcommand\tiny{\@setfontsize\tiny{6}{7}}
-\renewcommand\large{\@setfontsize\large{11}{14}}
-\renewcommand\Large{\@setfontsize\Large{13}{17}}
+\renewcommand\large{\@setfontsize\large{11.5}{14}}
+\renewcommand\Large{\@setfontsize\Large{13}{16}}
 \renewcommand\LARGE{\@setfontsize\LARGE{15}{20}}
-\renewcommand\huge{\@setfontsize\huge{20}{24}}
-\renewcommand\Huge{\@setfontsize\Huge{24}{29}}
-\newcommand\HUGE{\@setfontsize\HUGE{30}{36}}
+\renewcommand\huge{\@setfontsize\huge{18}{22}}
+\renewcommand\Huge{\@setfontsize\Huge{24}{26}}
+\newcommand\HUGE{\@setfontsize\HUGE{28}{32}}
 
 
 %---------------------------------------
@@ -156,13 +161,13 @@
 
 \RequirePackage{geometry}
 \geometry{
-  textwidth=4.65in,
+  textwidth=4.5in,
   textheight=7.5in,
-  marginparsep=0.17in,
-  marginparwidth=1in,
+  marginparsep=0.2in,
+  marginparwidth=1.1in,
   headheight=12pt,
-  headsep=24pt,
-  footskip=30pt,
+  headsep=28pt,
+  footskip=24pt,
   papersize={7in,9.25in},
   twoside,
   asymmetric,
@@ -211,26 +216,26 @@
 \newcommand\subtitle[1]{\gdef\@subtitle{#1}}
 
 \newcommand{\cb@titlefont}
-  {\sffamily\fontseries{b}\selectfont\HUGE}
+  {\sffamily\bfseries\HUGE}
 \newcommand{\cb@subtitlefont}
-  {\sffamily\itshape\LARGE}
+  {\sffamily\LARGE}
 \newcommand{\cb@authorfont}
-  {\sffamily\huge}
+  {\sffamily\bfseries\LARGE}
 
 \renewcommand{\maketitle}{%
   \hypersetup{pdfauthor=\@author, pdftitle=\@title}%
   \thispagestyle{empty}%
   {%
   \setlength\parindent{0mm}%
-  \raggedright\par
+  \centering\par
   \par\vspace*{6pc}%
-  \parbox{\linewidth}{\raggedright\cb@titlefont
+  \parbox{\linewidth}{\centering\cb@titlefont
     \@title}%
-  \par\vspace*{18pt}%
-  \parbox{\linewidth}{\raggedright\cb@subtitlefont
+  \par\vspace*{3pc}%
+  \parbox{\linewidth}{\centering\cb@subtitlefont
     \@subtitle}%
-  \par\vspace*{24pc}%
-  \parbox{\linewidth}{\raggedright\cb@authorfont
+  \par\vfill
+  \parbox{\linewidth}{\centering\cb@authorfont
     {{\@author}}}%
   }%
   \newpage
@@ -259,15 +264,15 @@
 
 \newcommand{\cb@evenhead}{%
   \ifthechapter
-    {\@chapapp\ \thechapter.\enspace{\chaptertitle}}
+    {\@chapapp\ \thechapter.\enspace\textit{\chaptertitle}}
     {}}
 \newcommand{\cb@oddhead}{%
   \ifthesection
     {\thesection.\enspace}
     {}%
-  \textit{\sectiontitle}}
+  {\sectiontitle}}
 \newcommand{\cb@page}
-  {{\bfseries\thepage}}
+  {\textbf{\thepage}}
 
 
 % Headers and footers extend into the margin
@@ -289,8 +294,8 @@
   % [even pages][][]{odd pages}{}{}
   \setfoot{}{\cb@draftingnote}{}
   \sethead
-    [\cb@page\hspace{6mm}\cb@evenhead][][]
-    {}{}{\cb@oddhead\hspace*{6mm}\cb@page}
+    [\cb@page\hspace{8mm}\cb@evenhead][][]
+    {}{}{\cb@oddhead\hspace*{8mm}\cb@page}
   }
 \pagestyle{headings}
 
@@ -298,35 +303,35 @@
 % Table of Contents [#toc]
 %-------------------
 \setcounter{tocdepth}{2}
-\contentsmargin{8mm}
+\contentsmargin{14mm}
 
-% \newcommand{\cb@tocrule}{{\normalfont\normalsize\titlerule*[0.5pc]{.}}}
+% \newcommand{\cb@tocrule}{{\normalfont\normalsize\titlerule*[0.4pc]{.}}}
 % \newcommand{\cb@tocrule}{\hspace{2ex}}
 \newcommand{\cb@tocrule}{\hfill}
-\titlecontents{part}[0mm]
-  {\vspace{30pt}\Large\sffamily\fontseries{b}\selectfont}
-  {\makebox[15pt][l]{\thecontentslabel}}
+\titlecontents{part}[20pt]
+  {\addvspace{30pt}\large\bfseries\scshape}
+  {\contentslabel{20pt}}
   {}
-  {\hfill\contentspage}
-  [\vspace*{-8pt}\rule{\linewidth}{0.4pt}\vspace*{6pt}]
+  {\hfill\rmfamily\normalsize\contentspage}
+  [\vspace{8pt}]
 
-\titlecontents{chapter}[0mm]
-  {\addvspace{6pt}\sffamily\bfseries\large}
-  {\rule{0pt}{16pt}\makebox[15pt][l]{\thecontentslabel\hspace{1.5ex}}}
-  {\hspace*{15pt}\rule{0pt}{10pt}}
+\titlecontents{chapter}[0pt]
+  {\addvspace{8pt}\bfseries}
+  {\chaptertitlename\ \thecontentslabel.\hspace{1.6ex}}
+  {}
+  {\cb@tocrule\rmfamily\normalsize\contentspage}
+  [\addvspace{4pt}]
+
+\titlecontents{section}[25pt]
+  {}
+  {\contentslabel{25pt}}
+  {}
   {\cb@tocrule\contentspage}
-  []
 
-\titlecontents{section}[15pt]
-  {\addvspace{2pt}\sffamily\bfseries}
-  {\makebox[20pt][l]{\color{black}\thecontentslabel}}
-  {\makebox[20pt][l]{}}
-  {\cb@tocrule\contentspage}
-
-\titlecontents{subsection}[35pt]
-  {\sffamily}
-  {\makebox[26pt][l]{\fontseries{l}\selectfont\thecontentslabel}}
-  {\makebox[26pt][l]{}}
+\titlecontents{subsection}[60pt]
+  {}
+  {\contentslabel{35pt}}
+  {\hspace*{-35pt}}
   {\cb@tocrule\contentspage}
 
 
@@ -340,12 +345,13 @@
 \titleclass{\part}{top}
 
 \titleformat{\part}
-  {\raggedright\sffamily\bfseries}
-  {\makebox[0pt][r]{\raisebox{-4pt}[0pt][0pt]{\fontsize{72}{30}\selectfont
-      \color{black}
-      \thepart\hspace{24pt}}}}
+  {\raggedright\rmfamily\itshape\bfseries}
+  {\makebox[0pt][r]{\raisebox{-9.5pt}[0pt][0pt]{\fontsize{140}{30}\selectfont
+      \color{cbLightBlue!50}%
+      \thepart}}}
   {0pt}
   {\Huge\fontseries{b}\selectfont{#1}}
+  % [{\titlerule[1.2pt]}]
 
 \titlespacing*{\part}
   {0pt}{8pc}{4pc}
@@ -357,27 +363,27 @@
 \assignpagestyle{\chapter}{plain}
 
 \titleformat{\chapter}
-  {\raggedright\sffamily\Huge\bfseries}
-  {%\hspace*{-0.6\cb@overhang}\makebox[0.6\cb@overhang][l]
-  \makebox[0pt][r]
-    {\raisebox{-4pt}[0pt][0pt]{\fontsize{72}{30}\selectfont
-      \color{black}
-      \thechapter\hspace{24pt}}}
+  {\raggedright\rmfamily\itshape\Huge\bfseries}
+  {\makebox[\textwidth][r]
+    {\raisebox{-20pt}[0pt][0pt]{\fontsize{132}{30}\selectfont
+      \color{cbLightBlue!50}%
+      \thechapter}}%
+    \hspace*{-\textwidth}
   }
-  % {\makebox[0pt][r]{\tikz\node[xshift=-14mm,yshift=6mm,font=\fontsize{54}{30}\selectfont, fill=cbLightBlue, text=white, minimum width=0.9in, minimum height=1in,overlay]{\thechapter};\hspace{15pt}}}
   {0pt}
-  {#1}
+  {\strut#1}
+  % [{\titlerule[1pt]}]
 
 \titlespacing*{\chapter}
-  {0pt}{1pc}{10pc}
+  {0pt}{2pc}{8pc}
 
 %---------------------
 % [#section]
 %---------------------
 \titleformat{\section}
-  {\sffamily\bfseries\Large\raggedright}
+  {\rmfamily\itshape\bfseries\Large\raggedright}
   {%\thesection
-    \makebox[0pt][r]{\mdseries\thesection\hspace*{10pt}}%
+    \makebox[0pt][r]{\color{cbDarkBlue}\thesection\hspace*{10pt}}%
   }
   {0pt}
   {#1}
@@ -389,8 +395,8 @@
 % [#subsection]
 %---------------------
 \titleformat{\subsection}
-  {\large\sffamily\bfseries}
-  {\makebox[0pt][r]{\mdseries\thesubsection\hspace*{10pt}}}
+  {\large\rmfamily\itshape\bfseries}
+  {\makebox[0pt][r]{\color{cbDarkBlue}\thesubsection\hspace*{10pt}}}
   {0pt}
   {#1}
 
@@ -402,8 +408,8 @@
 %---------------------
 
 \titleformat{\subsubsection}
-  {\sffamily\bfseries}
-  {\thesubsubsection}
+  {\rmfamily\bfseries}
+  {\textcolor{cbDarkBlue}{\thesubsubsection}}
   {1.5ex}
   {#1}
 
@@ -431,9 +437,9 @@
 
 \captionsetup{
   font={small},
-  labelfont={bf,sf},
+  labelfont={bf},
   skip=10pt,
-  labelsep=period,
+  labelsep=quad,
   singlelinecheck=false}
 
 \captionsetup[sub]{
@@ -445,7 +451,6 @@
   % labelsep=newline,
   % justification=Centering,
   singlelinecheck=false,
-  labelfont={bf,sf},
   skip=6pt,
 }
 
@@ -495,6 +500,8 @@
 \lightrulewidth=0.4pt
 \cmidrulewidth=0.4pt
 \arrayrulewidth=0.4pt
+\belowrulesep=.7ex
+\aboverulesep=.45ex
 
 \newenvironment{widetable}[1][tbp]
   {\begin{table}\begin{cb@wide}}
@@ -505,34 +512,40 @@
 %---------------------------------------
 
 \newlength{\epigraphwidth}
-\setlength{\epigraphwidth}{3.5in}
+\setlength{\epigraphwidth}{3.2in}
 \newlength{\epigraphindent}
-\setlength{\epigraphindent}{2\cb@parindent}
+\setlength{\epigraphindent}{-0.5\dimexpr\marginparwidth+\marginparsep\relax}
 \newlength{\beforeepigraphskip}
-\setlength{\beforeepigraphskip}{0mm}
+\setlength{\beforeepigraphskip}{-5pc}
 \newlength{\afterepigraphskip}
-\setlength{\afterepigraphskip}{1.5\baselineskip}
+\setlength{\afterepigraphskip}{2.5pc}
 
 \newenvironment{epigraphs}[1][\epigraphwidth]
   {\vspace*{\beforeepigraphskip}%
-    \begin{adjustwidth}
-        {\epigraphindent}
-        {\dimexpr\linewidth-\epigraphindent-#1\relax}
+    \begin{adjustwidth}{\epigraphindent}{0pt}
+    \begin{minipage}{\epigraphwidth}
     \setlength{\parskip}{0pt}%
-    \small\RaggedRight
+    \small\raggedright
     \par
   }
-  {\end{adjustwidth}
+  {%
+  \end{minipage}
+  \end{adjustwidth}
   \vspace*{\afterepigraphskip}}
 
 \newcommand\epigraph[2][]
   {#2
-  \begin{itemize}[left=16pt..24pt,rightmargin=4em]
-  \item[\mdseries---] {#1}
-  \end{itemize}
+  \ifblank{#1}{}{%
+    \begin{itemize}[left=4pt..12pt,rightmargin=4em]
+    \item[\mdseries---] {#1}
+    \end{itemize}
+  }
+  % \par\begin{adjustwidth}{0mm}{0mm}\raggedright
+  % \mdseries---\,{#1}
+  % \end{adjustwidth}
   \par\bigskip}
 
-\newcommand{\chapterindent}{\noindent\hspace*{\epigraphindent}}
+\newcommand{\chapterindent}{\noindent}
 
 
 %---------------------------------------
@@ -543,20 +556,22 @@
 \RequirePackage{ntheorem}
 
 % Define new theorem style for formatting exercises.
-\newtheoremstyle{exercise}
-  {\item[\hskip\labelsep \theorem@headerfont ##2\theorem@separator]}%
-  {\item[\hskip\labelsep \theorem@headerfont ##2---##3\theorem@separator]}
+\newcommand{\cbexercisesymbol}{$\triangleright$}
+\newtheoremstyle{exercise}%
+  {\item[\llap{\cbexercisesymbol}\hskip\labelsep\theorem@headerfont ##1 ##2\theorem@separator\hspace{\labelsep}]}%
+  {\item[\rlap{\vbox{\hbox{\llap{\cbexercisesymbol}\hskip\labelsep\theorem@headerfont ##1\ ##2\ (##3)\theorem@separator}\hbox{\strut}}}]}
+
 \theoremstyle{exercise}
 \theoremheaderfont{\bfseries}
 \theorembodyfont{\upshape}
 \theoremindent0pt
 \theorempreskip{\bigskipamount}
 \theorempostskip{\bigskipamount}
-\theoremseparator{.} 
-\newtheorem{exercise}{}[chapter]
+\theoremseparator{} 
+\newtheorem{exercise}{Exercise}[chapter]
 
-\Newassociation{answer}{cb@solution}{ans}
-\renewenvironment{cb@solution}[1]
+\Newassociation{answer}{cbsolution}{ans}
+\renewenvironment{cbsolution}[1]
   {\trivlist\item[]\textbf{#1.}\hspace{\labelsep}}
   {\endtrivlist}
 
@@ -581,7 +596,8 @@
 \newlength{\fancyvrbtopsep}
 \FV@AddToHook{\FV@ListParameterHook}
   {\topsep=\fancyvrbtopsep}
-\setlength{\fancyvrbtopsep}{\baselineskip}
+\setlength{\fancyvrbtopsep}{\abovedisplayskip}
+% \setlength{\fancyvrbtopsep}{\baselineskip}
 
 
 % Modify Verbatim environment to use a smaller font size.
@@ -590,7 +606,7 @@
 \RequirePackage{relsize}
 \renewcommand\RSpercentTolerance{0}
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}
-  {fontsize=\relscale{0.96}, baselinestretch=1.06}
+  {fontsize=\small}%, baselinestretch=1.06}
 
 % Define listing environment, unless one already exists
 \ifcsmacro{listing}{}{
@@ -599,6 +615,7 @@
     placement=tbp,
     name=Listing]{listing}
 }
+\AtBeginEnvironment{listing}{\fvset{frame=lines,framesep=6pt,framerule=0.4pt}}
 
 \captionsetup[listing]{
   singlelinecheck=false,
@@ -648,8 +665,8 @@
     final,
     colorlinks=true,
     linkcolor=.,
-    urlcolor=cbBlue,
-    citecolor=cbBlue,
+    urlcolor=black,
+    citecolor=black,
     breaklinks,
     baseurl={http://}
   ]{hyperref}
@@ -671,29 +688,31 @@
 
 \mdfdefinestyle{asideframe}{
     linewidth=1pt,
-    innertopmargin=20pt, innerbottommargin=12pt,
-    innerleftmargin=14.2pt, innerrightmargin=14.2pt,
+    innertopmargin=12pt, innerbottommargin=14pt,
+    innerleftmargin=10pt, innerrightmargin=10pt,
     skipabove=0pt, skipbelow=0pt,
-    frametitlefont=\large\sffamily\fontseries{b}\selectfont\color{cbDarkBrown},
+    frametitlefont=\large\rmfamily\itshape\bfseries\color{black},
     frametitlealignment=\raggedright,
     frametitlerule=false,
-    frametitlerulewidth=0.25pt,
+    % frametitlerulewidth=0.25pt,
     frametitleaboveskip=12pt,
     frametitlebelowskip=0pt,
     frametitlebackgroundcolor=white,
-    linecolor=cbDarkBrown,
+    linecolor=black,
   }
 
 \newenvironment{aside}[1]
   {\begin{asidebox}
-  \captionlistentry[asidebox]{#1}%
+    \captionlistentry[asidebox]{#1}%
     \begin{mdframed}[style=asideframe,
       skipabove=\bigskipamount,
       skipbelow=\bigskipamount,
-      frametitle=#1,
-    singleextra={\node[overlay] at ([xshift=-\marginparsep] O |- P) [fill=none, inner sep=2pt,
-        font=\sffamily\fontseries{b}\selectfont, draw=cbDarkBrown, fill=cbDarkBrown, text=white, anchor=north east]
-        {\hspace*{1.3ex}\strut Box \theasidebox\hspace*{1.3ex}};},
+      frametitle={Box \theasidebox.\enspace#1},
+    % singleextra={\node[overlay] at ([xshift=-\marginparsep] O |- P) [fill=none, inner sep=2pt,
+    %     font=\sffamily\bfseries, text=cbDarkBrown, %draw=cbDarkBrown, fill=cbDarkBrown, text=white, 
+    %     inner sep=0pt,
+    %     anchor=north east]
+    %     {\strut Box \theasidebox};},
       ]%
     \setlength{\parindent}{\cb@parindent}%
   }%
