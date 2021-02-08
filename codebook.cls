@@ -276,7 +276,7 @@
 
 
 % Headers and footers extend into the margin
-\widenhead{\cb@overhang}{0cm}%
+% \widenhead{\cb@overhang}{0cm}%
 
 \newcommand{\cb@draftingnote}
   {\iftoggle{cb@drafting}{\textcolor{gray}{\small\@title---DRAFT---\today}}{}}
@@ -291,11 +291,11 @@
 
 % Regular pages
 \renewpagestyle{headings}[]{%
+  \sethead{\cb@draftingnote}{}{}
   % [even pages][][]{odd pages}{}{}
-  \setfoot{}{\cb@draftingnote}{}
-  \sethead
-    [\cb@page\hspace{8mm}\cb@evenhead][][]
-    {}{}{\cb@oddhead\hspace*{8mm}\cb@page}
+  \setfoot
+    [\sffamily\llap{\cb@page\hspace{12mm}}\small\cb@evenhead][][]
+    {}{}{\sffamily{\small\cb@oddhead}\hspace*{12mm}\cb@page}
   }
 \pagestyle{headings}
 
