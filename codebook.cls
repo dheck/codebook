@@ -79,16 +79,21 @@
 \RequirePackage{enumitem}
 
 \setlist{
-  itemsep=3pt,
+  topsep=6pt,
+  itemsep=2pt,
   parsep=0pt,
-  labelsep=6pt,
-  font=\bfseries,
-  left=0pt .. 20pt,
-  labelwidth=!,
+  leftmargin=\parindent,
+  align=left,
+  labelwidth=\parindent,
+  labelsep=0pt
 }
 
-\setlist[itemize,1]{label={\raisebox{2pt}{\footnotesize\textbullet}}}
-\setlist[itemize,2]{label=\textendash}
+\setlist[itemize,1]{label={\raisebox{1pt}{\footnotesize\textbullet}}}
+\setlist[itemize,2]{label=\textendash,topsep=2pt}
+
+\setlist[description]{
+  labelsep=6pt
+}
 
 \newlist{tasks}{enumerate}{1}
 \setlist[tasks]{
