@@ -107,13 +107,18 @@ like the outside and the inside of the human body---both go together, they can't
 \end{epigraphs}
 
 \chapterindent
-Like any other \LaTeX{} document class, \emph{Codebook} is loaded using the \verb|\documentclass| command:
+\emph{Codebook} is a replacement for the standard \verb|book| document class.
+To use it in your \LaTeX{} document, load it with the \macroname{documentclass} command at the beginning of your document:
+\begin{texcode}
+\documentclass{codebook}
+\end{texcode}
+You can customize the behavior of \emph{codebook} by specifying options in square brackets:
 \begin{texcode}
 \documentclass[options]{codebook}
 \end{texcode}
 The following options are supported:
 \begin{itemize}
-  \item \texttt{minted}: Loads the \texttt{minted} package and configures it to work well with \emph{Codebook}.
+  \item \texttt{minted}: Loads the \texttt{minted} package and configures it for use with \emph{codebook}.
   \item \texttt{drafting}: Adds the current day to the footer and passes the option on to other packages that support it.
   Similar to the \verb|draft| option in the standard \LaTeX{} class this option is meant to be used while preparing the document and should be removed upon publication.
   \item \verb|draft|: Don't include external graphics and mark overfull boxes.
@@ -212,11 +217,31 @@ In addition to the six basic colors \textcolor{cbBlue}{\texttt{cbBlue}}, \textco
 %--------------------------------------
 
 \emph{Codebook} provides several ways to add notes and supplementary information to the text.
+
+
+\paragraph{Footnotes}
 As in all \LaTeX{} classes, you can add footnotes\footnote{Like this one.} using the \macroname{footnote} command.
 Footnotes are tucked away at the bottom of the page and are therefore (by design!) easy to ignore.
 Use them for information that is truly optional, or for information that you only include for the sake of completeness.
 
-\marginnote{The \texttt{note} environment}
+\paragraph{Margin notes}
+To place notes in the margin next to the text, you can use the \macroname{marginnote} command:
+\begin{texcode}
+\marginnote{An example of a margin note.}
+\end{texcode}
+\marginnote{An example of a margin note.}
+This example produces the note shown to the left.
+Margin notes generally serve a different purpose than notes embedded in the text and footnotes.
+Appearing next to the text makes them more prominent than footnotes, but it's still apparent that they are subordinate to the main text.
+There are three common uses for margin notes.
+First, to summarize the main points of a paragraph or to highlight key terms and concepts discussed in the text.
+Second, to visually dividing a section into smaller pieces (even though though traditional sectioning commands such as \macroname{subsection} or \macroname{paragraph} are usually preferable for this purpose);
+And third, to provide supplementary information in a position that is more prominent than a footnote.
+
+Examples of how to use margin notes to great effect can be found in \emph{Gravitation} by Misner, Thorne, and Wheeler \cite{misner:gravitation}, \emph{Fundamentals of Computer Graphics} by Shirley and Marschner \cite{shirley:fundamentals}.
+
+
+\paragraph{The \texttt{note} environment}
 To include notes inside the running text, use the ``\texttt{note}'' environment:
 \begin{texcode}
 \begin{note}
@@ -229,36 +254,45 @@ This produces the following output:
 Beware of bugs in the above code;
 I have only proved it correct, not tried it.
 \end{note}
-Since notes are visually set off from the main text it's clear that they provide supplementary information.
-They are best used for information that every reader should aware of but that can be safely skimmed.
+Notes are visually set off from the main text and are typeset in a smaller font.
+They are well suited for digressions, technical arguments, and other information that is relevant to the topic at hand but not important enough to be included in the main text.
 
-\marginnote{Margin notes}
-Supplementary information that you want readers should be aware of, even if they don't need to understand all details, us \macroname{marginnote} command:
+\paragraph{Asides}
+The \envname{aside} environment is used for lengthy asides that are only tangentially related to the topic at hand.
+Asides are typeset as framed boxes with a headline and multiple paragraphs of text.
+An example of an aside is shown on page~\pageref{box:urls}.
+It describes a way to typeset hyperlinks in documents that are meant to be printed \emph{and} read electronically.
+This box is produced by the following code:
 \begin{texcode}
-\marginnote{Margin notes}
+\begin{aside}{Typesetting Hyperlinks}
+\label{box:urls}
+A common problem when writing technical documents is dealing with links to websites and other online resources.
+What's the best way to include such 
+\href{https://en.wikipedia.org/wiki/Hyperlink}{hyperlinks}
+in a \LaTeX{} document?
+...
+\end{aside}
 \end{texcode}
-This example produces the margin note shown at the start of this paragraph.
-Margin notes generally serve a different purpose than notes embedded in the text and footnotes:
-They contain information that helps the reader, for example by summarizing the main points of a paragraph or group of paragraphs or by visually dividing a section into smaller pieces.
 
-\marginnote{Boxes}
-Finally, the \envname{aside} environment can be used to present information that is only indirectly related to the contents of the text.
-For example, Box~\ref{box:urls} on page~\pageref{box:urls} describes a way to use footnotes for representing hyperlinks in documents that are meant to be printed \emph{and} read electronically.
+Note that asides are unnumbered, but as shown in the example above, you can specify labels and refer to them with macros such as \macroname{pageref}.
+
+% TODO: nameref?
 
 
 %--------------------------------------
 \begin{aside}{Typesetting Hyperlinks}
 \label{box:urls}
-%--------------------------------------
 A common problem when writing technical documents is dealing with links to websites and other online resources.
-Using \href{https://en.wikipedia.org/wiki/Hyperlink}{hyperlinks} is usually the best solution for electronic documents;
-in \LaTeX{} this can be done using the \macroname{href} command from the \verb|hyperref| package.
+What's the best way to include such \href{https://en.wikipedia.org/wiki/Hyperlink}{hyperlinks} in a \LaTeX{} document?
+At the lowest level, there is the \macroname{href} command that is part of the \texttt{hyperref} package, which was used to include the hyperlink the in the previous sentence.
 
-In documents that are also meant to be printed and read offline, hyperlinks are not useful because the URL is invisible.
-There are two better solutions.
-If the web page is considered a primary or secondary source, add it to the bibliography and cite it like a book or an article \cite{wikipedia:hyperlink}.
+Using \macroname{href} alone is sufficient when producing eBooks, but it would be nice to include the URL in a way that is also readable if the document is printed.
+One solution is to include the URL directly in the text, for example using the \macroname{url} command (\url{https://en.wikipedia.org/wiki/Hyperlink}).
+This is acceptable for short URLs but can make the text harder to read.
+If the web page is considered a primary or secondary source, you can instead add it to the bibliography and cite it like a book or an article \cite{wikipedia:hyperlink}.
 Otherwise, simply use a \href{https://en.wikipedia.org/wiki/Hyperlink}{hyperlink}\footnote{\url{https://en.wikipedia.org/wiki/Hyperlink}} followed by a footnote that contains the URL.
 \end{aside}
+%--------------------------------------
 
 
 

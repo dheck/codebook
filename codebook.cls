@@ -692,17 +692,15 @@
   {asidebox}
 
 \mdfdefinestyle{asideframe}{
-    linewidth=1pt,
-    innertopmargin=12pt, innerbottommargin=14pt,
-    innerleftmargin=10pt, innerrightmargin=10pt,
+    linewidth=0.8pt,
+    innertopmargin=14pt, innerbottommargin=12pt,
+    innerleftmargin=12pt, innerrightmargin=12pt,
     skipabove=0pt, skipbelow=0pt,
-    frametitlefont=\large\rmfamily\itshape\bfseries\color{black},
-    frametitlealignment=\raggedright,
+    frametitlefont=\sffamily\bfseries\large,
+    frametitlealignment=\centering,
     frametitlerule=false,
-    % frametitlerulewidth=0.25pt,
-    frametitleaboveskip=12pt,
+    frametitleaboveskip=14pt,
     frametitlebelowskip=0pt,
-    frametitlebackgroundcolor=white,
     linecolor=black,
   }
 
@@ -712,14 +710,10 @@
     \begin{mdframed}[style=asideframe,
       skipabove=\bigskipamount,
       skipbelow=\bigskipamount,
-      frametitle={Box \theasidebox.\enspace#1},
-    % singleextra={\node[overlay] at ([xshift=-\marginparsep] O |- P) [fill=none, inner sep=2pt,
-    %     font=\sffamily\bfseries, text=cbDarkBrown, %draw=cbDarkBrown, fill=cbDarkBrown, text=white, 
-    %     inner sep=0pt,
-    %     anchor=north east]
-    %     {\strut Box \theasidebox};},
+      frametitle={#1},
       ]%
     \setlength{\parindent}{\cb@parindent}%
+    \fontsize{9.5}{11}\selectfont
   }%
   {%
   \end{mdframed}
@@ -736,7 +730,11 @@
   {\endlist}
 
 \newenvironment{note}
-  {\begin{quote}\small}
-  {\end{quote}}
+  {\begin{mdframed}[backgroundcolor=cbBlue!8,
+      innertopmargin=10pt,
+      innerbottommargin=10pt,
+      linecolor=cbBlue!5]
+    \fontsize{9.5}{11}\selectfont}
+  {\end{mdframed}}
 
 \endinput
