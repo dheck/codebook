@@ -385,51 +385,56 @@ To use \texttt{minted}, you can load the \emph{Codebook} class as follows:
 
 %--------------------------------------
 \subsection{Exercises and Solutions}
-%--------------------------------------
 
 \emph{Codebook} provides an easy way to typeset exercises and their solutions.
 Exercises are enclosed in the \envname{exercise} environment which takes an optional argument that includes a title.
 Inside each exercise you can use the \envname{answer} environment to specify a solution.
 The following example specifies a single exercise and its solution:
-\begin{lst*}{Specifying exercises and their solutions.}
 \begin{texcode}
 \begin{exercise}[Typesetting formulas]
 \label{ex:binomial}
 Explain how to typeset the following formulas in \LaTeX{}:
 \begin{tasks}
-  \item $(x+y)^2=x^2 + 2xy + y^2$;
-  \item $e^{i\pi}=-1$.
+  \item \label{task:binom} $(x+y)^2=x^2 + 2xy + y^2$;
+  \item \label{task:euler} $e^{i\pi}=-1$.
 \end{tasks}
 
 \begin{answer}
-\begin{tasks}
-  \item \verb|$(x+y)^2=x^2 + 2xy + y^2$|
-  \item \verb|$e^{i\pi}=-1$|
-\end{tasks}
+\ref{task:binom} \verb|$(x+y)^2=x^2 + 2xy + y^2$|.\quad
+\ref{task:euler} \verb|$e^{i\pi}=-1$|.
+\end{answer}
+\end{exercise}
+\begin{exercise}
+How do you typeset \LaTeX{}?.
+\begin{answer}
+\verb|\LaTeX{}|.
 \end{answer}
 \end{exercise}
 \end{texcode}
-\end{lst*}
 The \texttt{tasks} environment used in the example above behaves like \verb|itemize|, except that it uses alphabetic labels.
 At the point in the document where the \envname{exercise} environment appears, only the exercise itself is printed:
 \begin{exercise}[Typesetting formulas]
 \label{ex:binomial}
 Explain how to typeset the following formulas in \LaTeX{}:
 \begin{tasks}
-  \item $(x+y)^2=x^2 + 2xy + y^2$;
+  \item \label{task:binom} $(x+y)^2=x^2 + 2xy + y^2$;
   \item \label{task:euler} $e^{i\pi}=-1$.
 \end{tasks}
 
 \begin{answer}
-\begin{tasks}
-  \item \verb|$(x+y)^2=x^2 + 2xy + y^2$|
-  \item \verb|$e^{i\pi}=-1$|
-\end{tasks}
+\ref{task:binom} \verb|$(x+y)^2=x^2 + 2xy + y^2$|.\quad
+\ref{task:euler} \verb|$e^{i\pi}=-1$|
+\end{answer}
+\end{exercise}
+\begin{exercise}
+How do you typeset \LaTeX{}?.
+\begin{answer}
+\verb|\LaTeX{}|.
 \end{answer}
 \end{exercise}
 You can refer to exercises and tasks by labeling them as shown in the previous example. 
 The label of an exercise contains both the number of the chapter and the exercise, so writing \verb|Exercise~\ref{ex:binomial}| produces ``Exercise~\ref{ex:binomial}.'' 
-The label of a task contains just its alphabetic tag, so \verb|Task~\ref{task:euler}| produces ``Task~\ref{task:euler}.''
+The label of a task contains just its alphabetic tag, so \verb|\ref{task:euler}| produces ``\ref{task:euler}.''
 
 \marginnote{Loading answers}
 The answers are not typeset immediately but saved to a separate file.
