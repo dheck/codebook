@@ -51,10 +51,10 @@
 \setlength{\floatsep}{18pt plus 4pt minus 3pt}
 \setlength{\@fpsep}{18pt plus 1fil minus 4pt}
 
-% % Space between top/bottom float and text
+% Space between top/bottom float and text
 \setlength{\textfloatsep}{24pt plus 6pt minus 4pt}
 
-% % % Space before/after 'here' floats.
+% Space before/after 'here' floats.
 \setlength{\intextsep}{12pt plus 4pt minus 3pt}
 
 \def\textfraction{.25}
@@ -167,21 +167,21 @@
 \RequirePackage{geometry}
 \geometry{
   textwidth=4.5in,
-  textheight=7.5in,
+  textheight=7.6in,  % 42 lines with 13pt leading
   marginparsep=0.2in,
   marginparwidth=1.1in,
   headheight=12pt,
-  headsep=28pt,
-  footskip=24pt,
+  headsep=20pt,
+  footskip=36pt,
   papersize={7in,9.25in},
   twoside,
   asymmetric,
   reversemarginpar,
   includemp,    % respect margin when placing text block on paper
-  outer=0.54in,
+  outer=0.6in,
   % bindingoffset=0.156in,
   % showframe,
-  top=0.9in,
+  top=0.65in,
 }
 
 \newlength{\cb@overhang}
