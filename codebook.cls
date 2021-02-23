@@ -73,6 +73,8 @@
 % \setcounter{topnumber}{2}
 % \setcounter{bottomnumber}{1}
 
+\abovedisplayskip=10pt plus 2pt minus 2pt
+
 %---------------------------------------
 % #enumerate, #itemize, #lists
 %---------------------------------------
@@ -221,11 +223,11 @@
 \newcommand\subtitle[1]{\gdef\@subtitle{#1}}
 
 \newcommand{\cb@titlefont}
-  {\sffamily\bfseries\HUGE}
+  {\rmfamily\bfseries\fontsize{38}{38}\selectfont}
 \newcommand{\cb@subtitlefont}
-  {\sffamily\LARGE}
+  {\sffamily\fontseries{sb}\Large}
 \newcommand{\cb@authorfont}
-  {\sffamily\bfseries\LARGE}
+  {\sffamily\bfseries\large\lsstyle}
 
 \renewcommand{\maketitle}{%
   \hypersetup{pdfauthor=\@author, pdftitle=\@title}%
@@ -241,7 +243,7 @@
     \@subtitle}%
   \par\vfill
   \parbox{\linewidth}{\centering\cb@authorfont
-    {{\@author}}}%
+    {\MakeUppercase{\@author}}}%
   }%
   \newpage
   }
@@ -279,10 +281,6 @@
 \newcommand{\cb@page}
   {\textbf{\thepage}}
 
-
-% Headers and footers extend into the margin
-% \widenhead{\cb@overhang}{0cm}%
-
 \newcommand{\cb@draftingnote}
   {\iftoggle{cb@drafting}{\textcolor{gray}{\small\@title---DRAFT---\today}}{}}
 
@@ -290,7 +288,7 @@
 % in the bottom-right corner.
 \renewpagestyle{plain}{%
   \sethead{}{}{}%
-  \setfoot{}{\cb@draftingnote}{\cb@page}%
+  \setfoot{}{\cb@draftingnote}{\sffamily\cb@page}%
   }
 
 
@@ -308,36 +306,58 @@
 % Table of Contents [#toc]
 %-------------------
 \setcounter{tocdepth}{2}
-\contentsmargin{14mm}
+\contentsmargin{8mm}
 
 % \newcommand{\cb@tocrule}{{\normalfont\normalsize\titlerule*[0.4pc]{.}}}
-% \newcommand{\cb@tocrule}{\hspace{2ex}}
-\newcommand{\cb@tocrule}{\hfill}
-\titlecontents{part}[20pt]
-  {\addvspace{30pt}\large\bfseries\scshape}
-  {\contentslabel{20pt}}
-  {}
-  {\hfill\rmfamily\normalsize\contentspage}
-  [\vspace{8pt}]
 
-\titlecontents{chapter}[0pt]
-  {\addvspace{8pt}\bfseries}
-  {\chaptertitlename\ \thecontentslabel.\hspace{1.6ex}}
+
+
+\titlecontents{part}[0pt]
+  {\addvspace{20pt}\LARGE\sffamily\fontseries{b}\selectfont\color{cbDarkBlue}}
+  {\partname\ \thecontentslabel.\enspace}
   {}
-  {\cb@tocrule\rmfamily\normalsize\contentspage}
-  [\addvspace{4pt}]
+  {\quad\hfill\contentspage}
+  % [\titlerule{}\vspace{8pt}]
+
+\newbool{smallchapter}
+\newcommand{\cb@toc@chapterfont}
+  {\rmfamily\bfseries\itshape
+    \ifbool{smallchapter}
+      {\addvspace{6pt}\large}
+      {\addvspace{12pt}\LARGE}}
+
+\newcommand\immaddtocontents[1]{{%
+   \let\protect\@unexpandable@protect
+   \immediate\write\@auxout{\noexpand\@writefile{toc}{#1}}%
+}}
+
+\pretocmd{\frontmatter}{%
+  \immaddtocontents{\protect\booltrue{smallchapter}}}{}{}
+\pretocmd{\mainmatter}{%
+  \immaddtocontents{\protect\vspace{12pt}\protect\boolfalse{smallchapter}}}{}{}
+\pretocmd{\backmatter}{%
+  \immaddtocontents{\protect\vspace{12pt}\protect\booltrue{smallchapter}}}{}{}
+
+
+\titlecontents{chapter}[25pt]
+  {\cb@toc@chapterfont}
+  {\contentslabel{25pt}}
+  {\bfseries}
+  {\hspace{10pt}\hfill%\titlerule{}%\rmfamily
+    \contentspage}
+  [\vspace{2pt}]
 
 \titlecontents{section}[25pt]
-  {}
+  {\bfseries}
   {\contentslabel{25pt}}
   {}
-  {\cb@tocrule\contentspage}
+  {\hfill\contentspage}
 
 \titlecontents{subsection}[60pt]
   {}
   {\contentslabel{35pt}}
   {\hspace*{-35pt}}
-  {\cb@tocrule\contentspage}
+  {\hfill\contentspage}
 
 
 %---------------------
@@ -349,13 +369,12 @@
 % Part pages are empty but can contain additional text.
 \titleclass{\part}{top}
 
-\titleformat{\part}
-  {\raggedright\rmfamily\itshape\bfseries}
-  {\makebox[0pt][r]{\raisebox{-9.5pt}[0pt][0pt]{\fontsize{140}{30}\selectfont
-      \color{cbLightBlue!50}%
-      \thepart}}}
-  {0pt}
-  {\Huge\fontseries{b}\selectfont{#1}}
+\titleformat{\part}[display]
+  {\centering\rmfamily\fontsize{38}{42}\selectfont}
+  {\Large\osfstyle\lsstyle\scshape
+    \MakeLowercase{\partname}\enspace\MakeLowercase{\thepart}}
+  {8pt}
+  {#1}
   % [{\titlerule[1.2pt]}]
 
 \titlespacing*{\part}
@@ -367,72 +386,68 @@
 %---------------------
 \assignpagestyle{\chapter}{plain}
 
-\titleformat{\chapter}
-  {\raggedright\rmfamily\itshape\Huge\bfseries}
-  {\makebox[\textwidth][r]
-    {\raisebox{-20pt}[0pt][0pt]{\fontsize{132}{30}\selectfont
-      \color{cbLightBlue!50}%
-      \thechapter}}%
-    \hspace*{-\textwidth}
-  }
-  {0pt}
-  {\strut#1}
-  % [{\titlerule[1pt]}]
+\titleformat{\chapter}[display]
+  {\raggedright\rmfamily\fontsize{38}{42}\selectfont}
+  {\Large\osfstyle\lsstyle\scshape\MakeLowercase{\@chapapp}\enspace\thechapter}
+  {4pt}
+  {\begin{adjustwidth}{-0.6in}{0cm}
+    #1
+  \end{adjustwidth}}
 
 \titlespacing*{\chapter}
-  {0pt}{2pc}{8pc}
+  {0pt}{2pc}{2pc}
 
 %---------------------
 % [#section]
 %---------------------
 \titleformat{\section}
-  {\rmfamily\itshape\bfseries\Large\raggedright}
-  {%\thesection
-    \makebox[0pt][r]{\color{cbDarkBlue}\thesection\hspace*{10pt}}%
-  }
+  {\sffamily\bfseries\Large\raggedright}
+  {\thesection\hspace*{10pt}}
   {0pt}
-  {#1}
+  {\textls[30]{\MakeUppercase{#1}}}
 
 \titlespacing*{\section}
-  {0pt}{22pt}{8pt}
+  {0pt}{21pt}{12pt}
 
 %---------------------
 % [#subsection]
 %---------------------
 \titleformat{\subsection}
-  {\large\rmfamily\itshape\bfseries}
-  {\makebox[0pt][r]{\color{cbDarkBlue}\thesubsection\hspace*{10pt}}}
+  {\large\sffamily\bfseries}
+  {\thesubsection\hspace*{10pt}}
   {0pt}
   {#1}
 
 \titlespacing*{\subsection}
-  {0pt}{18pt}{6pt}
+  {0pt}{16pt}{6pt}
 
 %---------------------
 % [#subsubsection]
 %---------------------
 
 \titleformat{\subsubsection}
-  {\rmfamily\bfseries}
+  {\rmfamily\sffamily\bfseries}
   {\textcolor{cbDarkBlue}{\thesubsubsection}}
   {1.5ex}
   {#1}
 
 \titlespacing*{\subsubsection}
-  {0pt}{12pt}{5pt}
+  {0pt}{12pt}{4pt}
 
 %---------------------
 % [#paragraph]
 %---------------------
 
-\titleformat{\paragraph}
-  {\bfseries}
+\titleformat{\paragraph}[runin]
+  {\sffamily\fontseries{sb}\selectfont}
   {\theparagraph}
-  {1pc}
+  {0pc}
   {#1}
 
-\titlespacing*{\paragraph}
-  {0pt}{14pt}{2pt}
+\titlespacing{\paragraph}
+  {0pt}  % Indentation of first line
+  {\bigskipamount}  % Space before
+  {6pt}  % Space between title and text
 
 
 %---------------------------------------
@@ -440,9 +455,11 @@
 %---------------------------------------
 \RequirePackage{caption, subcaption}
 
+\DeclareCaptionFont{sb}{\fontseries{sb}\selectfont}
+
 \captionsetup{
   font={small},
-  labelfont={bf},
+  labelfont={sf,sb,up},
   skip=10pt,
   labelsep=quad,
   singlelinecheck=false}
@@ -501,7 +518,7 @@
 
 \RequirePackage{array, booktabs}
 
-\heavyrulewidth=0.8pt
+\heavyrulewidth=1.2pt
 \lightrulewidth=0.4pt
 \cmidrulewidth=0.4pt
 \arrayrulewidth=0.4pt
@@ -519,9 +536,10 @@
 \newlength{\epigraphwidth}
 \setlength{\epigraphwidth}{3.2in}
 \newlength{\epigraphindent}
-\setlength{\epigraphindent}{-0.5\dimexpr\marginparwidth+\marginparsep\relax}
+% \setlength{\epigraphindent}{-0.5\dimexpr\marginparwidth+\marginparsep\relax}
+\setlength{\epigraphindent}{0\cb@parindent} %\dimexpr\textwidth-\epigraphwidth}
 \newlength{\beforeepigraphskip}
-\setlength{\beforeepigraphskip}{-5pc}
+\setlength{\beforeepigraphskip}{-3pc}
 \newlength{\afterepigraphskip}
 \setlength{\afterepigraphskip}{2.5pc}
 
@@ -541,7 +559,7 @@
 \newcommand\epigraph[2][]
   {#2
   \ifblank{#1}{}{%
-    \begin{itemize}[left=4pt..12pt,rightmargin=4em]
+    \begin{itemize}[left=4pt..12pt,labelsep=2pt,rightmargin=3em,topsep=2pt]
     \item[\mdseries---] {#1}
     \end{itemize}
   }
@@ -563,21 +581,25 @@
 % Define new theorem style for formatting exercises.
 \newcommand{\cbexercisesymbol}{$\triangleright$}
 \newtheoremstyle{exercise}%
-  {\item[\llap{\cbexercisesymbol}\hskip\labelsep\theorem@headerfont ##1 ##2\theorem@separator\hspace{\labelsep}]}%
-  {\item[\rlap{\vbox{\hbox{\llap{\cbexercisesymbol}\hskip\labelsep\theorem@headerfont ##1\ ##2\ (##3)\theorem@separator}\hbox{\strut}}}]}
+  {\item[{\hspace{\labelsep}%
+    \makebox[\parindent][r]{\textcolor{gray}{\cbexercisesymbol\hskip\labelsep}}%
+    \theorem@headerfont ##2\theorem@separator}]}%
+  {\item[{\hspace{\labelsep}%\rlap{\hskip\labelsep\vbox{\hbox{%
+      \makebox[\parindent][r]{\textcolor{gray}{\cbexercisesymbol\hskip\labelsep}}%
+      \theorem@headerfont ##2\enspace{\itshape(##3)}\theorem@separator}]}
 
 \theoremstyle{exercise}
-\theoremheaderfont{\bfseries}
+\theoremheaderfont{\sffamily\fontseries{sb}\selectfont}
 \theorembodyfont{\upshape}
 \theoremindent0pt
-\theorempreskip{\bigskipamount}
-\theorempostskip{\bigskipamount}
-\theoremseparator{} 
-\newtheorem{exercise}{Exercise}[chapter]
+\theorempreskip{\medskipamount}
+\theorempostskip{\medskipamount}
+\theoremseparator{\ } 
+\newtheorem{exercise}{}[chapter]
 
 \Newassociation{answer}{cbsolution}{ans}
 \renewenvironment{cbsolution}[1]
-  {\trivlist\item[]\textbf{#1.}\hspace{\labelsep}}
+  {\trivlist\item[]{\sffamily\fontseries{sb}\selectfont#1}\hspace{\labelsep}}
   {\endtrivlist}
 
 \renewcommand{\solutionextension}{solution}
@@ -602,7 +624,6 @@
 \FV@AddToHook{\FV@ListParameterHook}
   {\topsep=\fancyvrbtopsep}
 \setlength{\fancyvrbtopsep}{\abovedisplayskip}
-% \setlength{\fancyvrbtopsep}{\baselineskip}
 
 
 % Modify Verbatim environment to use a smaller font size.
@@ -645,7 +666,7 @@
     \captionlistentry*[listing]{##1}%
     \def\cb@lstcaption{##1}}
   \caption{#2\ifblank{#1}{}{\label{#1}}}%
-  \fvset{formatcom=\marginnote{\upshape{\sffamily\bfseries\thelisting}\hspace{1.5ex}\cb@lstcaption}}%
+  \fvset{formatcom=\marginnote{\upshape{\sffamily\fontseries{sb}\selectfont\thelisting}\hspace{1.4ex}\itshape\cb@lstcaption}}%
   \ignorespaces
 }{%
   \nobreak
@@ -670,7 +691,7 @@
     final,
     colorlinks=true,
     linkcolor=.,
-    urlcolor=black,
+    urlcolor=cbDarkBlue,
     citecolor=black,
     breaklinks,
     baseurl={http://}
