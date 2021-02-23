@@ -632,7 +632,11 @@
 \RequirePackage{relsize}
 \renewcommand\RSpercentTolerance{0}
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}
-  {fontsize=\small}%, baselinestretch=1.06}
+  {fontsize=\relscale{0.95}, baselinestretch=1.05,
+    frame=leftline,
+    framesep=7.1pt,
+    framerule=0.4pt,
+    rulecolor=cbLightBlue}
 
 % Define listing environment, unless one already exists
 \ifcsmacro{listing}{}{
@@ -641,7 +645,7 @@
     placement=tbp,
     name=Listing]{listing}
 }
-\AtBeginEnvironment{listing}{\fvset{frame=lines,framesep=6pt,framerule=0.4pt}}
+\AtBeginEnvironment{listing}{\fvset{frame=single,framesep=6pt,framerule=0.4pt}}
 
 \captionsetup[listing]{
   singlelinecheck=false,
